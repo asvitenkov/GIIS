@@ -11,6 +11,7 @@
 #include "defines.h"
 #include "painter.h"
 #include "debugmodebox.h"
+#include "listenerdda.h"
 
 namespace Ui {
 class MainWindow;
@@ -57,15 +58,22 @@ private:
     DrawShapeTypes m_drawShapeType;
 
     Ui::MainWindow *ui;
-    QUndoStack *m_pUndoStack;
+
+    QUndoStack m_pUndoStack;
+    QUndoStack m_pTmpUndoStack;
     CCoordinateView *m_pView;
 
-    QUndoStack m_pTmpUndoStack;
+
 
     QColor m_mainColor;
     QColor m_secondaryColor;
 
     CDebugModeBox *m_pDebugBox;
+
+
+
+    //delete
+    CAbstractListener *m_pListener;
 
 private slots:
     void mouseClickOnCell(int x, int y);

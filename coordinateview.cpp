@@ -67,18 +67,6 @@ void CCoordinateView::_init()
 
 
     scale(0.3,0.3);
-//    zoomOut();
-//    zoomOut();
-//    zoomOut();
-
-//    zoomOut();
-//    zoomOut();
-//    zoomOut();
-//    zoomOut();
-//    zoomOut();
-//    zoomOut();
-//    zoomOut();
-    //_drawCoordDirection();
 
 }
 
@@ -89,18 +77,6 @@ void CCoordinateView::_init()
 void CCoordinateView::_drawGrid()
 {
     int i;
-
-//    m_horLines << m_pScene->addLine(-5000,0,5000,0,m_gridPen);
-//    m_vertLines << m_pScene->addLine(0,-5000,0,5000,m_gridPen);
-
-//    for(i=m_nCellSize; i<= 5000; i+=m_nCellSize)
-//    {
-//        m_horLines << m_pScene->addLine(-5000,i,5000,i,m_gridPen);
-//        m_horLines << m_pScene->addLine(-5000,-i,5000,-i,m_gridPen);
-//        m_vertLines << m_pScene->addLine(i,-5000,i,5000,m_gridPen);
-//        m_vertLines << m_pScene->addLine(-i,-5000,-i,5000,m_gridPen);
-//    }
-
 
     QGraphicsLineItem *item;
     m_horLines << (item = m_pScene->addLine(-5000,0,5000,0,m_gridPen));
@@ -125,7 +101,6 @@ void CCoordinateView::_drawGrid()
 void CCoordinateView::scale(qreal sx, qreal sy)
 {
     QGraphicsView::scale(sx,sy);
-    //_drawCoordDirection();
 }
 
 
@@ -135,7 +110,6 @@ void CCoordinateView::_drawCoordDirection()
 
     return;
 
-    //qreal sc = transform().m11();
 
     int x0,x1,x2,y0,y1,y2;
 
@@ -206,17 +180,6 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
     nY = (y+1) * m_nCellSize;
     nX = x * m_nCellSize;
 
-//    if(m_pVerCoordLine)
-//        m_pVerCoordLine->setZValue(0.0);
-//    if(m_pHorCoordLine)
-//        m_pHorCoordLine->setZValue(0.0);
-//    QGraphicsRectItem *item = dynamic_cast<QGraphicsRectItem*>(m_pScene->itemAt(nX + m_nCellSize/2.0,-nY + m_nCellSize/2.0));
-
-//    if(m_pVerCoordLine)
-//        m_pVerCoordLine->setZValue(0.9);
-//    if(m_pHorCoordLine)
-//        m_pHorCoordLine->setZValue(0.9);
-
     QGraphicsRectItem *item;
     item = m_pArray[x+5000][y+5000];
 
@@ -231,7 +194,6 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
         item->setBrush(brush);
         item->setPen(cellPen);
         item->setZValue(0.3);
-//        qDebug() << "item alredy at pos:" <<item->pos() <<" " << QPoint(nX,-nY);
     }
     else
     {
@@ -278,13 +240,7 @@ QPoint CCoordinateView::posToCell(qreal x, qreal y)
 
 QColor CCoordinateView::cellColor(int x, int y)//, bool isEmpty)
 {
-//    QPoint point = cellToPos(x,y);
-//    QGraphicsRectItem *item = dynamic_cast<QGraphicsRectItem*> (m_pScene->itemAt(point.x()+m_nCellSize/2.0, point.y()+m_nCellSize/2.0));
-//    if(item == NULL)
-//    {
-//        return QColor(Qt::white);
-//    }
-//    else return item->pen().color();
+
     QGraphicsRectItem *item = m_pArray[x+5000][y+5000];
     if(item != NULL)
     {

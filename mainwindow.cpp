@@ -18,8 +18,7 @@ MainWindow::~MainWindow()
 {
 
     qDebug() << "MainWindow::~MainWindow()";
-    if(m_pDebugBox!=NULL) delete m_pUndoStack;
-    if(m_pUndoStack!=NULL) delete m_pUndoStack;
+    if(m_pDebugBox!=NULL) delete m_pDebugBox;
     if(m_pView != NULL) delete m_pView;
     delete ui;
 }
@@ -28,6 +27,7 @@ MainWindow::~MainWindow()
 void MainWindow::_init()
 {
     m_pView = new CCoordinateView(0);
+
 
 
     connect(m_pView,SIGNAL(clickOnCell(int,int)),this,SLOT(mouseClickOnCell(int,int)));
@@ -83,9 +83,10 @@ void MainWindow::_init()
 
     //ui->debugInfoBrowser->setUndoRedoEnabled(true);
 
-    m_pUndoStack = NULL;
-
     m_drawShapeType = DST_LINE;
+
+    m_pListener = new CListenerDDA(m_pView, m_pDebugBox,QColor(Qt::red), QColor(Qt::blue));
+
 }
 
 
@@ -93,16 +94,19 @@ void MainWindow::mouseClickOnCell(int x, int y)
 {
 //    qDebug() << "MainWindow::buttonClickOnCell (" << x << ", " << y << ")";
 
-    switch(m_btnClickState){
-        case(MCS_UNDEFINED):
-            _mouseFirstClick(QPoint(x,y));
-            break;
-        case(MCS_FIRST_CLICK):
-            _mouseSecondClick(QPoint(x,y));
-            break;
-        default:
-            Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-    }
+    m_pListener->mousePressEvent(QPoint(x,y));
+
+
+//    switch(m_btnClickState){
+//        case(MCS_UNDEFINED):
+//            _mouseFirstClick(QPoint(x,y));
+//            break;
+//        case(MCS_FIRST_CLICK):
+//            _mouseSecondClick(QPoint(x,y));
+//            break;
+//        default:
+//            Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
+//    }
 
 }
 
@@ -111,16 +115,17 @@ void MainWindow::mouseMoveOnCell(int x, int y)
 {
     ui->statusBar->clearMessage();
     ui->statusBar->showMessage(QString("Текущая позиция курсора (%1,%2)").arg(QString::number(x)).arg(QString::number(y)));
-    switch(m_btnClickState){
-        case(MCS_UNDEFINED):
-            return;
-            break;
-        case(MCS_FIRST_CLICK):
-            _drawTempararyObjectAfterFirstClick(QPoint(x,y));
-            break;
-        default:
-            Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-    }
+    m_pListener->mouseMoveEvent(QPoint(x,y));
+//    switch(m_btnClickState){
+//        case(MCS_UNDEFINED):
+//            return;
+//            break;
+//        case(MCS_FIRST_CLICK):
+//            _drawTempararyObjectAfterFirstClick(QPoint(x,y));
+//            break;
+//        default:
+//            Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
+//    }
 }
 
 

@@ -12,6 +12,15 @@ enum MouseClickState{
 };
 
 
+enum Mode{
+    MODE_DEBUG,
+    MODE_NORMAL,
+
+
+    MODE_LAST
+};
+
+
 enum DrawShapeTypes{
     DST_LINE,
     DST_ELLIPSE,

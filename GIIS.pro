@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-TARGET = CoordinateWidget
+TARGET = GIIS
 TEMPLATE = app
 
 
@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     algorithmdda.cpp \
     painter.cpp \
     algorithmbresenham.cpp \
-    debugmodebox.cpp
+    debugmodebox.cpp \
+    abstractlistener.cpp \
+    listenerdda.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -30,7 +32,9 @@ HEADERS  += mainwindow.h \
     defines.h \
     painter.h \
     algorithmbresenham.h \
-    debugmodebox.h
+    debugmodebox.h \
+    abstractlistener.h \
+    listenerdda.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui
