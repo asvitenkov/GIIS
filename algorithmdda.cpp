@@ -96,3 +96,15 @@ QString CAlgorithmDDA::getInitInfo()
 {
     return m_sInitInfo;
 }
+
+
+void CAlgorithmDDA::setEndPos(QPoint pos)
+{
+    m_endPoint = pos;
+}
+
+
+void CAlgorithmDDA::setStartPos(QPoint pos)
+{
+    m_endPoint = pos;
+}

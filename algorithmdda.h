@@ -15,8 +15,10 @@ public:
     StepPoints getStepDrawPoint();
     void reset();
     QString getInfo();
-
     QString getInitInfo();
+
+    void setStartPos(QPoint pos);
+    void setEndPos(QPoint pos);
 
 
 private:

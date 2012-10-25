@@ -21,6 +21,7 @@ public:
     void setNormalModeEnable();
     void virtual clearTmpObject() = 0;
     void virtual fixTmpObject() = 0;
+    virtual void reset() = 0;
 
 
 protected:
