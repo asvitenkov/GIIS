@@ -106,5 +106,5 @@ void CAlgorithmDDA::setEndPos(QPoint pos)
 
 void CAlgorithmDDA::setStartPos(QPoint pos)
 {
-    m_endPoint = pos;
+    m_startPoint = pos;
 }

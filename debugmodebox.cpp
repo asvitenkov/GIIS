@@ -144,7 +144,7 @@ void CDebugModeBox::clear()
     this->setDisabled(true);
     goToBegin();
     ui->textBrowser->clear();
-    if(m_pAlgorithm!=NULL) {delete m_pAlgorithm; m_pAlgorithm = NULL;}
+    //if(m_pAlgorithm!=NULL) {delete m_pAlgorithm; m_pAlgorithm = NULL;}
     m_undoStack.clear();
 }
 

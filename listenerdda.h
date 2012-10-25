@@ -3,6 +3,7 @@
 
 #include "abstractlistener.h"
 #include "algorithmdda.h"
+#include "painter.h"
 
 class CListenerDDA : public CAbstractListener
 {
@@ -10,8 +11,6 @@ public:
     explicit CListenerDDA(CCoordinateView *view, CDebugModeBox *box, QColor mainColor, QColor secondaryColor);
     void mousePressEvent(QPoint pos);
     void mouseMoveEvent(QPoint pos);
-    void clearTmpObject();
-    void fixTmpObject();
     ~CListenerDDA();
     void reset();
 
@@ -20,6 +19,7 @@ private:
     void drawLine();
     void drawDebugLine(QPoint start, QPoint end);
     void drawNormalLine(QPoint start, QPoint end);
+    void drawTemporaryLine(QPoint start, QPoint end);
     void modeChanged(Mode mode, Mode oldMode);
 
 

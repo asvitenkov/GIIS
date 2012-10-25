@@ -46,3 +46,19 @@ CAbstractListener::~CAbstractListener()
 {
 
 }
+
+
+void CAbstractListener::clearTmpObject()
+{
+    while(m_tmpUndoStack.canUndo())
+        m_tmpUndoStack.undo();
+    m_tmpUndoStack.clear();
+}
+
+
+void CAbstractListener::fixTmpObject()
+{
+    while(m_tmpUndoStack.canRedo())
+        m_tmpUndoStack.redo();
+    m_tmpUndoStack.clear();
+}

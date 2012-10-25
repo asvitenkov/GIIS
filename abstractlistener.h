@@ -19,8 +19,8 @@ public:
     void setSecondaryColor(QColor color);
     void setDebugModeEnable();
     void setNormalModeEnable();
-    void virtual clearTmpObject() = 0;
-    void virtual fixTmpObject() = 0;
+    void virtual clearTmpObject();
+    void virtual fixTmpObject();
     virtual void reset() = 0;
 
 
