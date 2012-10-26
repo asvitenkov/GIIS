@@ -18,9 +18,26 @@ MainWindow::~MainWindow()
 {
 
     qDebug() << "MainWindow::~MainWindow()";
+
+    QMap<QObject*, CAbstractListener*>::iterator it = m_listenersMap.begin();
+    CAbstractListener *listener;
+    qDebug() << m_listenersMap.size();
+    while( it != m_listenersMap.end())
+    {
+        listener = *it;
+        delete listener;
+        it++;
+    }
+
+
     if(m_pDebugBox!=NULL) delete m_pDebugBox;
     if(m_pView != NULL) delete m_pView;
+
+
     delete ui;
+
+
+
 }
 
 
@@ -29,6 +46,45 @@ void MainWindow::_init()
     m_pView = new CCoordinateView(0);
 
 
+    ui->viewFrameGrid->addWidget(m_pView);
+
+    m_pDebugBox = new CDebugModeBox(this);
+    ui->sidePanel->addWidget(m_pDebugBox);
+    m_pDebugBox->setDisabled(true);
+
+    m_pTmpUndoStack.clear();
+
+    m_firstPoint = QPoint(0,0);
+    m_secondPoint = QPoint(0,0);
+
+    m_btnClickState = MCS_UNDEFINED;
+
+    m_pCurrentListener = NULL;
+
+    m_bHighlightInitPoints = false;
+    m_mainColor = QColor(Qt::blue);
+    //m_mainColor.setAlpha(10);
+    m_secondaryColor = QColor(Qt::red);
+
+
+    ui->btnSecondaryColor->setAutoFillBackground(true);
+    ui->btnMainColor->setAutoFillBackground(true);
+
+    _setMainColor(m_mainColor);
+    _setSecondaryColor(m_secondaryColor);
+
+
+    ui->radioBtnAlgDDA->setChecked(true);
+    ui->radioBtnAlgBrezenhema->setChecked(false);
+
+    ui->radioBtnDefaultMode->setChecked(true);
+    //defaultModeEnable();
+
+    //ui->debugInfoBrowser->setUndoRedoEnabled(true);
+
+    m_drawShapeType = DST_LINE;
+
+    //m_pListener = new CListenerLineDDA(m_pView, m_pDebugBox,QColor(Qt::red), QColor(Qt::blue));
 
     connect(m_pView,SIGNAL(clickOnCell(int,int)),this,SLOT(mouseClickOnCell(int,int)));
     connect(m_pView,SIGNAL(moveOnCell(int,int)),this,SLOT(mouseMoveOnCell(int,int)));
@@ -49,72 +105,26 @@ void MainWindow::_init()
     connect(ui->radioBtnAlgBrezenhema,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnAlgDDA,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
-    ui->viewFrameGrid->addWidget(m_pView);
-
-    m_pDebugBox = new CDebugModeBox(this);
-    ui->sidePanel->addWidget(m_pDebugBox);
-    m_pDebugBox->setDisabled(true);
-
-    m_pTmpUndoStack.clear();
-
-    m_firstPoint = QPoint(0,0);
-    m_secondPoint = QPoint(0,0);
-
-    m_btnClickState = MCS_UNDEFINED;
-
-    m_bHighlightInitPoints = false;
-    m_mainColor = QColor(Qt::blue);
-    //m_mainColor.setAlpha(10);
-    m_secondaryColor = QColor(Qt::red);
-
-
-    ui->btnSecondaryColor->setAutoFillBackground(true);
-    ui->btnMainColor->setAutoFillBackground(true);
-
-    _setMainColor(m_mainColor);
-    _setSecondaryColor(m_secondaryColor);
-
+    connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
 
     ui->radioBtnAlgDDA->setChecked(true);
     ui->radioBtnAlgBrezenhema->setChecked(false);
-
     ui->radioBtnDefaultMode->setChecked(true);
-    defaultModeEnable();
-
-    //ui->debugInfoBrowser->setUndoRedoEnabled(true);
-
-    m_drawShapeType = DST_LINE;
-
-    m_pListener = new CListenerDDA(m_pView, m_pDebugBox,QColor(Qt::red), QColor(Qt::blue));
-
 
 //    for(int i=0; i<250; i++)
 //        for(int j=1;j<250;j++)
 //        {
 //            m_pView->setCellColor(QPoint(i-130,j-130),QColor(Qt::green));
 //        }
-
+    createListeners();
+    ui->radioBtnAlgDDA->click();
 }
 
 
 void MainWindow::mouseClickOnCell(int x, int y)
 {
-//    qDebug() << "MainWindow::buttonClickOnCell (" << x << ", " << y << ")";
-
-    m_pListener->mousePressEvent(QPoint(x,y));
-
-
-//    switch(m_btnClickState){
-//        case(MCS_UNDEFINED):
-//            _mouseFirstClick(QPoint(x,y));
-//            break;
-//        case(MCS_FIRST_CLICK):
-//            _mouseSecondClick(QPoint(x,y));
-//            break;
-//        default:
-//            Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-//    }
-
+    if(m_pCurrentListener != NULL)
+        m_pCurrentListener->mousePressEvent(QPoint(x,y));
 }
 
 
@@ -122,91 +132,8 @@ void MainWindow::mouseMoveOnCell(int x, int y)
 {
     ui->statusBar->clearMessage();
     ui->statusBar->showMessage(QString("Текущая позиция курсора (%1,%2)").arg(QString::number(x)).arg(QString::number(y)));
-    m_pListener->mouseMoveEvent(QPoint(x,y));
-//    switch(m_btnClickState){
-//        case(MCS_UNDEFINED):
-//            return;
-//            break;
-//        case(MCS_FIRST_CLICK):
-//            _drawTempararyObjectAfterFirstClick(QPoint(x,y));
-//            break;
-//        default:
-//            Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-//    }
-}
-
-
-void MainWindow::_mouseFirstClick(QPoint cellPos)
-{
-    switch(m_drawShapeType)
-    {
-    case(DST_LINE):
-        m_pDebugBox->fix();
-        _fixTemporaryObject();
-        m_firstPoint = cellPos;
-        m_btnClickState = MCS_FIRST_CLICK;
-        break;
-    default:
-        Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-    }
-}
-
-
-void MainWindow::_mouseSecondClick(QPoint cellPos)
-{
-    switch(m_drawShapeType)
-    {
-    case(DST_LINE):
-        m_secondPoint = cellPos;
-        m_btnClickState = MCS_UNDEFINED;
-        _drawCommonLine(m_firstPoint,m_secondPoint);
-        break;
-    default:
-        Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-    }
-}
-
-void MainWindow::_drawCommonLine(QPoint startPoint, QPoint endPoint)
-{
-    if(m_bDebugModeEnable)
-    {
-        _drawDebugLine(startPoint,endPoint);
-    }
-    else
-    {
-        _drawDefaultLine(startPoint,endPoint);
-    }
-}
-
-void MainWindow::_drawDefaultLine(QPoint startPoint, QPoint endPoint)
-{
-
-    _removeTemporaryObject();
-    CAbstractPaintAlgorithm *algorithm = _getCurrentPaintAlgorithm();
-
-    CPainter::drawLine(m_pView,algorithm,startPoint,endPoint,_mainColor(),_secondaryColor());
-
-    if(algorithm!=NULL)delete algorithm;
-
-}
-
-
-CAbstractPaintAlgorithm* MainWindow::_getCurrentPaintAlgorithm()
-{
-    if(ui->radioBtnAlgBrezenhema->isChecked())
-    {
-        return new CAlgorithmBresenham(m_firstPoint,m_secondPoint);
-    }
-    else if(ui->radioBtnAlgDDA->isChecked())
-    {
-        return  new CAlgorithmDDA(m_firstPoint,m_secondPoint);
-    }
-}
-
-void MainWindow::_drawDebugLine(QPoint startPoint, QPoint endPoint)
-{
-    _removeTemporaryObject();
-    m_pDebugBox->setData(_getCurrentPaintAlgorithm(),m_pView,_mainColor());
+    if(m_pCurrentListener != NULL)
+        m_pCurrentListener->mouseMoveEvent(QPoint(x,y));
 }
 
 
@@ -265,27 +192,32 @@ void MainWindow::_setSecondaryColor(QColor color)
 
 void MainWindow::defaultModeEnable()
 {
-    _removeTemporaryObject();
-    m_pDebugBox->fix();
-    m_bDebugModeEnable = false;
-    _switchMode();
+    if(m_pCurrentListener!=NULL)
+    {
+        m_pCurrentListener->reset();
+        m_mode = MODE_NORMAL;
+        m_pCurrentListener->setMode(m_mode);
+    }
 }
 
 
 void MainWindow::debugModeEnable()
 {
-    _removeTemporaryObject();
-    m_bDebugModeEnable = true;
-    _switchMode();
+    if(m_pCurrentListener!=NULL){
+        m_pCurrentListener->reset();
+        m_mode = MODE_DEBUG;
+        m_pCurrentListener->setMode(m_mode);
+    }
 }
 
 
 void MainWindow::clearView()
 {
-    m_pView->clear();
-    _removeTemporaryObject();
-    m_btnClickState = MCS_UNDEFINED;
+
     m_pDebugBox->clear();
+    if(m_pCurrentListener != NULL)
+        m_pCurrentListener->reset();
+     m_pView->clear();
 }
 
 
@@ -308,63 +240,48 @@ void MainWindow::highlightEndPoints()
 }
 
 
-void MainWindow::_switchMode()
-{
-    m_btnClickState = MCS_UNDEFINED;
-
-}
-
-
-void MainWindow::_drawTempararyObjectAfterFirstClick(QPoint curentPos)
-{
-    switch(m_drawShapeType)
-    {
-     case (DST_LINE):
-        _removeTemporaryObject();
-        m_secondPoint = curentPos;
-        _drawTemporaryLine(m_firstPoint,curentPos);
-        break;
-    default:
-        Q_ASSERT(!"UNDEFINED STATE IN SWITCH. ADD NEW CASE");
-    }
-}
-
-
-
-void MainWindow::_removeTemporaryObject()
-{
-    while(m_pTmpUndoStack.canUndo())
-        m_pTmpUndoStack.undo();
-    m_pTmpUndoStack.clear();
-}
-
-
-void MainWindow::_drawTemporaryLine(QPoint startPoint, QPoint endPoint)
-{
-    CAbstractPaintAlgorithm *alg = _getCurrentPaintAlgorithm();
-    StepPoints points = alg->getDrawPoints();
-    StepPoints::iterator it;
-    QPoint point;
-    for(it = points.begin(); it!=points.end(); it++)
-    {
-        point = *it;
-        QColor color = _mainColor();
-        color.setAlpha(100);
-        m_pTmpUndoStack.push(new CChangeCellColorCommand(m_pView,point.x(),point.y(),color));
-    }
-}
-
-void MainWindow::_fixTemporaryObject()
-{
-    while(m_pTmpUndoStack.canRedo())
-        m_pTmpUndoStack.redo();
-    m_pTmpUndoStack.clear();
-}
-
-
-
 void MainWindow::drawAlgorithmChanged()
 {
-    _removeTemporaryObject();
-    m_btnClickState = MCS_UNDEFINED;
+    qDebug() << "drawAlgorithmChanged";
+    QObject *objSender = sender();
+    if(objSender == NULL) return;
+    QMap<QObject*, CAbstractListener*>::iterator it=m_listenersMap.find(objSender);
+    if(it!=m_listenersMap.end())
+    {
+        if( m_pCurrentListener != NULL ) m_pCurrentListener->reset();
+        m_pCurrentListener = *it;
+        qDebug() << "current listener is " << m_pCurrentListener->name();
+    }
+    else
+    {
+        qCritical("MainWindow::drawAlgorithmChanged() undef algorithm" );
+        if( m_pCurrentListener != NULL ) m_pCurrentListener->reset();
+        m_pCurrentListener = NULL;
+    }
+
+}
+
+
+void MainWindow::createListeners()
+{
+    m_listenersMap.insert(ui->radioBtnAlgDDA, new CListenerLineDDA(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnAlgBrezenhema, new CListenerLineBresenham(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    //m_listenersMap.insert(ui->radioBtnAlgBrezenhema, new CListenerDDA(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+}
+
+
+void MainWindow::algorithmTabIndexChanged(int index)
+{
+    qDebug() << index;
+    QWidget *curTabWidget = ui->tabAlgorithms->widget(index);
+    if(m_pCurrentListener != NULL)
+        m_pCurrentListener->reset();
+    if(curTabWidget == ui->algorithmLinesTab)
+    {
+        ui->radioBtnAlgDDA->click();
+    }
+    else{
+        qCritical() << "void MainWindow::algorithmTabIndexChanged(int index) undefined tab ";
+        m_pCurrentListener = NULL;
+    }
 }

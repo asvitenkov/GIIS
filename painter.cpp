@@ -12,7 +12,7 @@ void CPainter::drawLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorith
 {
     StepPoints points = algorithm->getDrawPoints();
     QColor curColor;
-    for(int i=0; i<points.size(); i++)
+    for(unsigned int i=0; i<points.size(); i++)
     {
         if( i==0 || i == points.size() - 1 )
             curColor = secondaryColor;

@@ -5,7 +5,7 @@
 
 
 CAlgorithmDDA::CAlgorithmDDA(QPoint startPoint, QPoint endPoint)
-    : m_startPoint(startPoint), m_endPoint(endPoint)
+    : CAbstractLinePaintAlgorithm(startPoint, endPoint)
 {
     _init();
 }
@@ -95,16 +95,4 @@ QString CAlgorithmDDA::getInfo()
 QString CAlgorithmDDA::getInitInfo()
 {
     return m_sInitInfo;
-}
-
-
-void CAlgorithmDDA::setEndPos(QPoint pos)
-{
-    m_endPoint = pos;
-}
-
-
-void CAlgorithmDDA::setStartPos(QPoint pos)
-{
-    m_startPoint = pos;
 }

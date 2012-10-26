@@ -1,12 +1,12 @@
 #ifndef ALGORITHMBRESENHAM_H
 #define ALGORITHMBRESENHAM_H
 
-#include "abstractpaintalgorithm.h"
+#include "abstractlinepaintalgorithm.h"
 
 
 #include <QPoint>
 
-class CAlgorithmBresenham : public CAbstractPaintAlgorithm
+class CAlgorithmBresenham : public CAbstractLinePaintAlgorithm
 {
 public:
     CAlgorithmBresenham(QPoint startPoint, QPoint endPoint);
@@ -15,7 +15,6 @@ public:
     StepPoints getStepDrawPoint();
     void reset();
     QString getInfo();
-
     QString getInitInfo();
 
 private:

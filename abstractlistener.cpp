@@ -15,21 +15,12 @@ void CAbstractListener::initialize()
 }
 
 
-void CAbstractListener::setDebugModeEnable()
+void CAbstractListener::setMode(Mode mode)
 {
     Mode oldMode = m_mode;
-    m_mode = MODE_DEBUG;
+    m_mode = mode;
     modeChanged(m_mode,oldMode);
 }
-
-
-void CAbstractListener::setNormalModeEnable()
-{
-    Mode oldMode = m_mode;
-    m_mode = MODE_NORMAL;
-    modeChanged(m_mode,oldMode);
-}
-
 
 void CAbstractListener::setMainColor(QColor color)
 {
@@ -44,7 +35,7 @@ void CAbstractListener::setSecondaryColor(QColor color)
 
 CAbstractListener::~CAbstractListener()
 {
-
+    qDebug() << "CAbstractListener::~CAbstractListener()";
 }
 
 
@@ -61,4 +52,10 @@ void CAbstractListener::fixTmpObject()
     while(m_tmpUndoStack.canRedo())
         m_tmpUndoStack.redo();
     m_tmpUndoStack.clear();
+}
+
+
+QString CAbstractListener::name()
+{
+    return m_sListenerName;
 }

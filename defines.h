@@ -6,26 +6,19 @@
 enum MouseClickState{
     MCS_UNDEFINED,
     MCS_FIRST_CLICK,
-    MCS_SECOND_CLICK,
-
-    MCS_LAST_ITEM
+    MCS_SECOND_CLICK
 };
 
 
 enum Mode{
     MODE_DEBUG,
-    MODE_NORMAL,
-
-
-    MODE_LAST
+    MODE_NORMAL
 };
 
 
 enum DrawShapeTypes{
     DST_LINE,
-    DST_ELLIPSE,
-
-    DST_LAST_TYPE
+    DST_ELLIPSE
 };
 
 #endif // DEFINES_H

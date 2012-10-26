@@ -21,7 +21,10 @@ SOURCES += main.cpp\
     algorithmbresenham.cpp \
     debugmodebox.cpp \
     abstractlistener.cpp \
-    listenerdda.cpp
+    abstractlinelistener.cpp \
+    listenerlinedda.cpp \
+    abstractlinepaintalgorithm.cpp \
+    listenerlinebresenham.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -34,7 +37,10 @@ HEADERS  += mainwindow.h \
     algorithmbresenham.h \
     debugmodebox.h \
     abstractlistener.h \
-    listenerdda.h
+    abstractlinelistener.h \
+    listenerlinedda.h \
+    abstractlinepaintalgorithm.h \
+    listenerlinebresenham.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

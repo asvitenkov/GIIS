@@ -2,11 +2,11 @@
 #define ALGORITHMCDA_H
 
 
-#include <QPoint>
 
-#include "abstractpaintalgorithm.h"
 
-class CAlgorithmDDA: public CAbstractPaintAlgorithm
+#include "abstractlinepaintalgorithm.h"
+
+class CAlgorithmDDA: public CAbstractLinePaintAlgorithm
 {
 public:
     CAlgorithmDDA(QPoint startPoint, QPoint endPoint);
@@ -17,22 +17,16 @@ public:
     QString getInfo();
     QString getInitInfo();
 
-    void setStartPos(QPoint pos);
-    void setEndPos(QPoint pos);
-
-
 private:
     void _init();
 
-    QPoint m_startPoint;
-    QPoint m_endPoint;
-    QPointF m_curPoint;
+
     qreal m_fDx;
     qreal m_fDy;
     int m_nStep;
     int m_nLimit;
 
-     bool m_bFirstStep;
+
 };
 
 #endif // ALGORITHMCDA_H

@@ -11,7 +11,9 @@
 #include "defines.h"
 #include "painter.h"
 #include "debugmodebox.h"
-#include "listenerdda.h"
+#include "listenerlinedda.h"
+#include "listenerlinebresenham.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -27,25 +29,11 @@ public:
     
 private:
     void _init();
-    void _mouseFirstClick(QPoint cellPos);
-    void _mouseSecondClick(QPoint cellPos);
-    void _drawCommonLine(QPoint startPoint, QPoint endPoint);
-    void _drawDefaultLine(QPoint startPoint, QPoint endPoint);
-    void _drawDebugLine(QPoint startPoint, QPoint endPoint);
     void _setMainColor(QColor color);
     void _setSecondaryColor(QColor color);
-    void _switchMode();
-    void _drawTempararyObjectAfterFirstClick(QPoint curentPos);
-    void _fixTemporaryObject();
     QColor _mainColor();
-    void _removeTemporaryObject();
-    void _drawTemporaryLine(QPoint startPoint, QPoint endPoint);
     QColor _secondaryColor();
-    CAbstractPaintAlgorithm *_getCurrentPaintAlgorithm();
-//    void _redoStack();
-//    void _drawLineAtDebugMode();
-//    void _clearLastDraw();
-
+    void createListeners();
 
     QPoint m_firstPoint;
     QPoint m_secondPoint;
@@ -69,11 +57,14 @@ private:
     QColor m_secondaryColor;
 
     CDebugModeBox *m_pDebugBox;
+    QMap<QObject*, CAbstractListener*> m_listenersMap;
 
-
+    CAbstractListener *m_pCurrentListener;
 
     //delete
-    CAbstractListener *m_pListener;
+    //CAbstractListener *m_pListener;
+
+    Mode m_mode;
 
 private slots:
     void mouseClickOnCell(int x, int y);
@@ -82,15 +73,12 @@ private slots:
     void setSecondaryColor();
     void debugModeEnable();
     void defaultModeEnable();
-//    void debugModeNextStep();
-//    void debugModePreviosStep();
     void clearView();
     void zoomOut();
     void zoomIn();
-//    void stepToSrart();
-//    void stepToEnd();
     void highlightEndPoints();
     void drawAlgorithmChanged();
+    void algorithmTabIndexChanged(int index);
 };
 
 #endif // MAINWINDOW_H

@@ -1,7 +1,7 @@
 #include "algorithmbresenham.h"
 
 CAlgorithmBresenham::CAlgorithmBresenham(QPoint startPoint, QPoint endPoint)
-    : m_startPoint(startPoint), m_endPoint(endPoint)
+    : CAbstractLinePaintAlgorithm(startPoint, endPoint)
 {
     _init();
 }

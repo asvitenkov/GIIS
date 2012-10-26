@@ -7,7 +7,7 @@
 #include <QDebug>
 
 
-#define ADD_STEP_POINTS(from, to) for(int i=0;i<from.size();i++) to.push_back(from.at(i));
+#define ADD_STEP_POINTS(from, to) for(unsigned int i=0;i<from.size();i++) to.push_back(from.at(i));
 typedef std::vector<QPoint> StepPoints;
 
 class CAbstractPaintAlgorithm

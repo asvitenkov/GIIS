@@ -17,12 +17,11 @@ public:
     void virtual mouseMoveEvent(QPoint pos) = 0;
     void setMainColor(QColor color);
     void setSecondaryColor(QColor color);
-    void setDebugModeEnable();
-    void setNormalModeEnable();
+    void setMode(Mode mode);
     void virtual clearTmpObject();
     void virtual fixTmpObject();
     virtual void reset() = 0;
-
+    virtual QString name();
 
 protected:
     void initialize();
@@ -30,13 +29,16 @@ protected:
 
     MouseClickState m_mouseClickState;
     Mode m_mode;
+
+    CDebugModeBox *m_pDebugModeBox;
     QColor m_mainColor;
     QColor m_SecondaryColor;
-    CDebugModeBox *m_pDebugModeBox;
     CCoordinateView *m_pCoordinateView;
     QPoint m_currentMousePoint;
 
     QUndoStack m_tmpUndoStack;
+
+    QString m_sListenerName;
 
 };
 
