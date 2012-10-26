@@ -87,6 +87,13 @@ void MainWindow::_init()
 
     m_pListener = new CListenerDDA(m_pView, m_pDebugBox,QColor(Qt::red), QColor(Qt::blue));
 
+
+//    for(int i=0; i<250; i++)
+//        for(int j=1;j<250;j++)
+//        {
+//            m_pView->setCellColor(QPoint(i-130,j-130),QColor(Qt::green));
+//        }
+
 }
 
 

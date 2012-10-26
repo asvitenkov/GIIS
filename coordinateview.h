@@ -41,7 +41,7 @@ private:
      QGraphicsPolygonItem* m_pVerCoordLine;
      QGraphicsPolygonItem* m_pHorCoordLine;
 
-     QGraphicsRectItem* m_pArray[10000][10000];
+     QGraphicsRectItem* m_pArray[260][260];
 public slots:
      void zoomIn();
      void zoomOut();

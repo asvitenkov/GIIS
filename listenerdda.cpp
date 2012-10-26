@@ -11,7 +11,7 @@ void  CListenerDDA::initialize()
     CAbstractListener::initialize();
     m_startPos = QPoint(0,0);
     m_endPos = QPoint(0,0);
-    m_mode = MODE_DEBUG;
+    m_mode = MODE_NORMAL;
     m_pAlgorithm = new CAlgorithmDDA(m_startPos, m_endPos);
 }
 

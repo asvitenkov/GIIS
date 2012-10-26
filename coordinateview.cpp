@@ -61,7 +61,7 @@ void CCoordinateView::_init()
 //    }
 
 
-    memset(&m_pArray,NULL,10000*10000);
+    memset(&m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
 
     _drawGrid();
 
@@ -181,7 +181,7 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
     nX = x * m_nCellSize;
 
     QGraphicsRectItem *item;
-    item = m_pArray[x+5000][y+5000];
+    item = m_pArray[x+130][y+130];
 
     QPen cellPen;
 
@@ -202,7 +202,7 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
         item->setData(0,QVariant(x));
         item->setData(1,QVariant(y));
         item->setPos(nX,-nY);
-        m_pArray[x+5000][y+5000] = item;
+        m_pArray[x+130][y+130] = item;
 
 //        qDebug() << "add item at pos:" <<item->pos();
     }
@@ -241,7 +241,7 @@ QPoint CCoordinateView::posToCell(qreal x, qreal y)
 QColor CCoordinateView::cellColor(int x, int y)//, bool isEmpty)
 {
 
-    QGraphicsRectItem *item = m_pArray[x+5000][y+5000];
+    QGraphicsRectItem *item = m_pArray[x+130][y+130];
     if(item != NULL)
     {
         return (item->brush().color());
@@ -277,9 +277,12 @@ void CCoordinateView::clear(){
             bool ok = false;
             int x = rItem->data(0).toInt(&ok);
             int y = rItem->data(1).toInt(&ok);
-            m_pArray[x+5000][y+5000] = NULL;
+            m_pArray[x+130][y+130] = NULL;
             m_pScene->removeItem(rItem);
             delete rItem;
         }
     }
+    memset(m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
+   //m_pScene->clear();
+   //_drawGrid();
 }
