@@ -14,6 +14,7 @@ public:
     static void drawLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint, QPoint endPoint,QColor mainColor, QColor secondaryColor);
     static void drawDebugLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QTextBrowser *textBrowser, QUndoStack *undoStack, QPoint startPoint, QPoint endPoint,QColor mainColor, QColor secondaryColor);
     static void drawRound(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint,QColor mainColor, QColor secondaryColor);
+    static void drawParabola(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint,QColor mainColor, QColor secondaryColor);
 
 private:
     CPainter();

@@ -104,19 +104,13 @@ void MainWindow::_init()
     connect(ui->radioBtnAlgBrezenhema,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnAlgDDA,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnRound,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+    connect(ui->radioBtnAlgorithmParabola,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
 
     ui->radioBtnAlgDDA->setChecked(true);
     ui->radioBtnAlgBrezenhema->setChecked(false);
     ui->radioBtnDefaultMode->setChecked(true);
-
-//    for(int i=0; i<250; i++)
-//        for(int j=1;j<250;j++)
-//        {
-//            m_pView->setCellColor(QPoint(i-130,j-130),QColor(Qt::green));
-//        }
-//    clearView();
 
     createListeners();
     ui->radioBtnAlgDDA->click();
@@ -128,8 +122,8 @@ void MainWindow::_init()
 //    CAlgorithmRound *round =  new  CAlgorithmRound(QPoint(5,7),7);
 //    m_pDebugBox->setData(round,m_pView,QColor(Qt::red));
 
-    CAlgorithmParabola *p = new CAlgorithmParabola(QPoint(0,0),25);
-    m_pDebugBox->setData(p,m_pView,QColor(Qt::red));
+//    CAlgorithmParabola *p = new CAlgorithmParabola(QPoint(0,-20),15);
+//    m_pDebugBox->setData(p,m_pView,QColor(Qt::red));
 
     //qDebug() << points.size();
 
@@ -294,6 +288,7 @@ void MainWindow::createListeners()
     m_listenersMap.insert(ui->radioBtnAlgDDA, new CListenerLineDDA(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnAlgBrezenhema, new CListenerLineBresenham(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnRound, new CListenerRoundAlgorithm(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnAlgorithmParabola, new CListenerParabola(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
 }
 
 

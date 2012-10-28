@@ -17,6 +17,7 @@
 #include "listenerroundalgorithm.h"
 
 #include "algorithmparabola.h"
+#include "listenerparabola.h"
 
 namespace Ui {
 class MainWindow;

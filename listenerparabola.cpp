@@ -1,28 +1,29 @@
-#include "listenerroundalgorithm.h"
+#include "listenerparabola.h"
 
-CListenerRoundAlgorithm::CListenerRoundAlgorithm(CCoordinateView *view, CDebugModeBox *box, QColor mainColor, QColor secondaryColor)
+CListenerParabola::CListenerParabola(CCoordinateView *view, CDebugModeBox *box, QColor mainColor, QColor secondaryColor)
     :CAbstractListener(view,box,mainColor,secondaryColor)
 {
-    m_sListenerName = "Listener round algorithm";
+    m_sListenerName = "Listener parabola algorithm";
     m_pAlgorithm = NULL;
     this->initialize();
+
 }
 
-void CListenerRoundAlgorithm::initialize()
+void CListenerParabola::initialize()
 {
     CAbstractListener::initialize();
 
-    m_radius = 0;
+    m_p = 1;
     m_centerPoint = QPoint(0,0);
     m_bHighlightMainPoints = false;
     m_mode = MODE_NORMAL;
     if(m_pAlgorithm!=NULL) delete m_pAlgorithm;
-    m_pAlgorithm = new CAlgorithmRound(m_centerPoint,m_radius);
+    m_pAlgorithm = new CAlgorithmParabola(m_centerPoint, m_p);
 
 }
 
 
-void CListenerRoundAlgorithm::mouseMoveEvent(QPoint pos)
+void CListenerParabola::mouseMoveEvent(QPoint pos)
 {
     //m_radius = distance(m_centerPoint,pos);
 
@@ -36,34 +37,34 @@ void CListenerRoundAlgorithm::mouseMoveEvent(QPoint pos)
         // удаляем старый временный объект
         clearTmpObject();
         // рисуется новый временный объект
-        drawTemporaryRound(m_centerPoint, distance(m_centerPoint,pos));
+        drawTemporaryParabola(m_centerPoint,-m_centerPoint.y() + pos.y());
         break;
     }
 }
 
-void CListenerRoundAlgorithm::mousePressEvent(QPoint pos)
+void CListenerParabola::mousePressEvent(QPoint pos)
 {
     switch(m_mouseClickState)
     {
     case MCS_UNDEFINED:
         m_mouseClickState = MCS_FIRST_CLICK;
         m_centerPoint = pos;
-        m_radius = 0;
+        m_p = 1;
         m_pDebugModeBox->fix();
         break;
     case MCS_FIRST_CLICK:
-        m_radius = distance(m_centerPoint,pos);
+        m_p = - m_centerPoint.y()+pos.y();
         m_mouseClickState = MCS_UNDEFINED;
         clearTmpObject();
-        drawRound();
+        drawParabola();
         break;
     default:
-        qCritical() << "void CListenerRoundAlgorithm::mousePressEvent(QPoint pos) undef value in switch ";
+        qCritical() << "void CListenerParabola::mousePressEvent(QPoint pos) undef value in switch ";
     }
 }
 
 
-void CListenerRoundAlgorithm::reset()
+void CListenerParabola::reset()
 {
     m_mouseClickState = MCS_UNDEFINED;
     clearTmpObject();
@@ -74,7 +75,7 @@ void CListenerRoundAlgorithm::reset()
     }
 }
 
-void CListenerRoundAlgorithm::modeChanged(Mode mode, Mode oldMode)
+void CListenerParabola::modeChanged(Mode mode, Mode oldMode)
 {
     m_mouseClickState = MCS_UNDEFINED;
     clearTmpObject();
@@ -86,40 +87,40 @@ void CListenerRoundAlgorithm::modeChanged(Mode mode, Mode oldMode)
 }
 
 
-CListenerRoundAlgorithm::~CListenerRoundAlgorithm()
+CListenerParabola::~CListenerParabola()
 {
 
 }
 
-void CListenerRoundAlgorithm::drawRound()
+void CListenerParabola::drawParabola()
 {
     switch(m_mode)
     {
     case MODE_DEBUG:
-        drawDebugRound(m_centerPoint,m_radius);
+        drawDebugParabola(m_centerPoint,m_p);
         break;
     case MODE_NORMAL:
-        drawNormalRound(m_centerPoint, m_radius);
+        drawNormalParabola(m_centerPoint, m_p);
         break;
     default:
-        qCritical() << "CListenerRoundAlgorithm::drawRound() undef value in switch ";
+        qCritical() << "void CListenerParabola::drawParabola()undef value in switch ";
         break;
     }
 }
 
 
-void CListenerRoundAlgorithm::drawNormalRound(QPoint center, int radius)
+void CListenerParabola::drawNormalParabola(QPoint center, int pValue)
 {
     m_pAlgorithm->setCenterPoint(center);
-    m_pAlgorithm->setRadius(radius);
+    m_pAlgorithm->setPValue(pValue);
 
-    CPainter::drawRound(m_pCoordinateView,m_pAlgorithm,m_centerPoint,m_mainColor,m_secondaryColor);
+    CPainter::drawParabola(m_pCoordinateView,m_pAlgorithm,m_centerPoint,m_mainColor,m_secondaryColor);
 }
 
-void CListenerRoundAlgorithm::drawTemporaryRound(QPoint center, int radius)
+void CListenerParabola::drawTemporaryParabola(QPoint center, int pValue)
 {
-    m_pAlgorithm->setRadius(radius);
     m_pAlgorithm->setCenterPoint(center);
+    m_pAlgorithm->setPValue(pValue);
 
     StepPoints points = m_pAlgorithm->getDrawPoints();
     StepPoints::iterator it;
@@ -134,17 +135,10 @@ void CListenerRoundAlgorithm::drawTemporaryRound(QPoint center, int radius)
 }
 
 
-void CListenerRoundAlgorithm::drawDebugRound(QPoint center, int radius)
+void CListenerParabola::drawDebugParabola(QPoint center, int pValue)
 {
     clearTmpObject();
-    m_pAlgorithm->setCenterPoint(center);
-    m_pAlgorithm->setRadius(radius);
-    m_pDebugModeBox->setData(m_pAlgorithm,m_pCoordinateView,mainColor());
-}
-
-
-int CListenerRoundAlgorithm::distance(QPoint start, QPoint end)
-{
-    QPoint r = start - end;
-    return sqrt(pow(r.x(),2)+pow(r.y(),2));
+    this->m_pAlgorithm->setCenterPoint(center);
+    this->m_pAlgorithm->setPValue(pValue);
+    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor);
 }

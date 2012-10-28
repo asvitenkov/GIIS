@@ -71,3 +71,8 @@ QColor CAbstractListener::secondaryColor()
 {
     return m_secondaryColor;
 }
+
+void CAbstractListener::highlightMainPoints(bool enable)
+{
+    m_bHighlightMainPoints = enable;
+}

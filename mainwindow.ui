@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>691</width>
-    <height>442</height>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,29 +77,38 @@
         <property name="maximumSize">
          <size>
           <width>320</width>
-          <height>16777215</height>
+          <height>1500</height>
          </size>
+        </property>
+        <property name="tabShape">
+         <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
+        </property>
+        <property name="documentMode">
+         <bool>false</bool>
         </property>
         <widget class="QWidget" name="algorithmLinesTab">
          <attribute name="title">
           <string>Линии первого порядка</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_8">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <item row="0" column="0">
            <widget class="QGroupBox" name="groupBox">
             <property name="minimumSize">
              <size>
               <width>250</width>
-              <height>0</height>
+              <height>70</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>320</width>
-              <height>16777215</height>
+              <height>70</height>
              </size>
             </property>
             <property name="font">
@@ -111,6 +120,9 @@
              <string>Алгоритм отрисовки</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMaximumSize</enum>
+             </property>
              <property name="leftMargin">
               <number>14</number>
              </property>
@@ -127,9 +139,12 @@
               <number>0</number>
              </property>
              <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout">
+              <layout class="QVBoxLayout" name="verticalLayout" stretch="5,2">
                <property name="spacing">
                 <number>0</number>
+               </property>
+               <property name="sizeConstraint">
+                <enum>QLayout::SetMinimumSize</enum>
                </property>
                <item>
                 <widget class="QRadioButton" name="radioBtnAlgBrezenhema">
@@ -185,6 +200,24 @@
              <string>Фигуры</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
+             </property>
+             <property name="leftMargin">
+              <number>14</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QRadioButton" name="radioBtnRound">
                <property name="text">
@@ -193,9 +226,9 @@
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_2">
+              <widget class="QRadioButton" name="radioBtnAlgorithmParabola">
                <property name="text">
-                <string>RadioButton</string>
+                <string>Парабола</string>
                </property>
               </widget>
              </item>

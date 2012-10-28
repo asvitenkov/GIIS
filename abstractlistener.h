@@ -24,10 +24,14 @@ public:
     void virtual fixTmpObject();
     virtual void reset() = 0;
     virtual QString name();
+    virtual void highlightMainPoints(bool enable);
+
 
 protected:
     void initialize();
     void virtual modeChanged(Mode mode, Mode oldMode) = 0;
+
+    bool m_bHighlightMainPoints;
 
     MouseClickState m_mouseClickState;
     Mode m_mode;

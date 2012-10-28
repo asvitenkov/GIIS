@@ -33,6 +33,7 @@ private:
     int m_limit;
     int m_currentStep;
     bool m_bFirstStep;
+    bool m_bIsRevert;
     QPoint m_currentPoint;
 };
 

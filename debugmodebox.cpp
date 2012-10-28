@@ -12,6 +12,7 @@ void CDebugModeBox::setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView 
     _init();
 
     this->setEnabled(true);
+
 }
 
 CDebugModeBox::CDebugModeBox(QWidget *parent)
