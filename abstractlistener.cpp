@@ -1,7 +1,7 @@
 #include "abstractlistener.h"
 
 CAbstractListener::CAbstractListener(CCoordinateView *view, CDebugModeBox *box, QColor mainColor, QColor secondaryColor)
-    :m_pDebugModeBox(box), m_mainColor(mainColor), m_SecondaryColor(secondaryColor), m_pCoordinateView(view)
+    :m_pDebugModeBox(box), m_mainColor(mainColor), m_secondaryColor(secondaryColor), m_pCoordinateView(view)
 {
 
 }
@@ -29,7 +29,7 @@ void CAbstractListener::setMainColor(QColor color)
 
 void CAbstractListener::setSecondaryColor(QColor color)
 {
-    m_SecondaryColor = color;
+    m_secondaryColor = color;
 }
 
 
@@ -58,4 +58,16 @@ void CAbstractListener::fixTmpObject()
 QString CAbstractListener::name()
 {
     return m_sListenerName;
+}
+
+
+QColor CAbstractListener::mainColor()
+{
+    return m_mainColor;
+}
+
+
+QColor CAbstractListener::secondaryColor()
+{
+    return m_secondaryColor;
 }

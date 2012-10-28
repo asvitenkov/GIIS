@@ -22,6 +22,21 @@ void CPainter::drawLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorith
     }
 }
 
+void CPainter::drawRound(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint, QColor mainColor, QColor secondaryColor)
+{
+    StepPoints points = algorithm->getDrawPoints();
+    QColor curColor = mainColor;
+    for(unsigned int i=0; i<points.size(); i++)
+    {
+        QPoint curPoint = points.at(i);
+//        if( i==0 || i == points.size() - 1 )
+//            curColor = secondaryColor;
+//        else curColor = mainColor;
+
+        view->setCellColor(curPoint,curColor);
+    }
+}
+
 
 void CPainter::drawDebugLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QTextBrowser *textBrowser, QUndoStack *undoStack, QPoint startPoint, QPoint endPoint, QColor mainColor, QColor secondaryColor)
 {

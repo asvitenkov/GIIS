@@ -13,7 +13,10 @@
 #include "debugmodebox.h"
 #include "listenerlinedda.h"
 #include "listenerlinebresenham.h"
+#include "algorithmround.h"
+#include "listenerroundalgorithm.h"
 
+#include "algorithmparabola.h"
 
 namespace Ui {
 class MainWindow;

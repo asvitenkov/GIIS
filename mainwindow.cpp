@@ -70,8 +70,7 @@ void MainWindow::_init()
     ui->btnSecondaryColor->setAutoFillBackground(true);
     ui->btnMainColor->setAutoFillBackground(true);
 
-    _setMainColor(m_mainColor);
-    _setSecondaryColor(m_secondaryColor);
+
 
 
     ui->radioBtnAlgDDA->setChecked(true);
@@ -104,6 +103,7 @@ void MainWindow::_init()
 
     connect(ui->radioBtnAlgBrezenhema,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnAlgDDA,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+    connect(ui->radioBtnRound,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
 
@@ -116,8 +116,23 @@ void MainWindow::_init()
 //        {
 //            m_pView->setCellColor(QPoint(i-130,j-130),QColor(Qt::green));
 //        }
+//    clearView();
+
     createListeners();
     ui->radioBtnAlgDDA->click();
+
+    _setMainColor(m_mainColor);
+    _setSecondaryColor(m_secondaryColor);
+
+
+//    CAlgorithmRound *round =  new  CAlgorithmRound(QPoint(5,7),7);
+//    m_pDebugBox->setData(round,m_pView,QColor(Qt::red));
+
+    CAlgorithmParabola *p = new CAlgorithmParabola(QPoint(0,0),25);
+    m_pDebugBox->setData(p,m_pView,QColor(Qt::red));
+
+    //qDebug() << points.size();
+
 }
 
 
@@ -174,6 +189,7 @@ void MainWindow::_setMainColor(QColor color)
                                     .arg(QString::number(m_mainColor.red()))
                                     .arg(QString::number(m_mainColor.green()))
                                     .arg(QString::number(m_mainColor.blue())));
+    m_pCurrentListener->setMainColor(m_mainColor);
 }
 
 
@@ -186,6 +202,7 @@ void MainWindow::_setSecondaryColor(QColor color)
                                     .arg(QString::number(m_secondaryColor.red()))
                                     .arg(QString::number(m_secondaryColor.green()))
                                     .arg(QString::number(m_secondaryColor.blue())));
+    m_pCurrentListener->setSecondaryColor(m_secondaryColor);
 }
 
 
@@ -237,6 +254,13 @@ void MainWindow::highlightEndPoints()
     if(ui->checkBoxHightlightEndPoints->isChecked())
         m_bHighlightInitPoints = true;
     else m_bHighlightInitPoints = false;
+
+    CAbstractLineListener *lineListener = dynamic_cast<CAbstractLineListener*>(m_pCurrentListener);
+    if(lineListener != NULL)
+    {
+        lineListener->setHighlightBorderPoint(m_bHighlightInitPoints);
+    }
+
 }
 
 
@@ -250,6 +274,8 @@ void MainWindow::drawAlgorithmChanged()
     {
         if( m_pCurrentListener != NULL ) m_pCurrentListener->reset();
         m_pCurrentListener = *it;
+        m_pCurrentListener->setMainColor(m_mainColor);
+        m_pCurrentListener->setSecondaryColor(m_secondaryColor);
         qDebug() << "current listener is " << m_pCurrentListener->name();
     }
     else
@@ -258,6 +284,7 @@ void MainWindow::drawAlgorithmChanged()
         if( m_pCurrentListener != NULL ) m_pCurrentListener->reset();
         m_pCurrentListener = NULL;
     }
+    highlightEndPoints();
 
 }
 
@@ -266,7 +293,7 @@ void MainWindow::createListeners()
 {
     m_listenersMap.insert(ui->radioBtnAlgDDA, new CListenerLineDDA(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnAlgBrezenhema, new CListenerLineBresenham(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
-    //m_listenersMap.insert(ui->radioBtnAlgBrezenhema, new CListenerDDA(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnRound, new CListenerRoundAlgorithm(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
 }
 
 
@@ -279,6 +306,10 @@ void MainWindow::algorithmTabIndexChanged(int index)
     if(curTabWidget == ui->algorithmLinesTab)
     {
         ui->radioBtnAlgDDA->click();
+    }
+    else if(curTabWidget == ui->algorithmLines2order)
+    {
+        ui->radioBtnRound->click();
     }
     else{
         qCritical() << "void MainWindow::algorithmTabIndexChanged(int index) undefined tab ";

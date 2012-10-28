@@ -13,6 +13,8 @@ public:
     void mouseMoveEvent(QPoint pos);
     ~CAbstractLineListener();
     void reset();
+    QColor secondaryColor();
+    void setHighlightBorderPoint(bool enable);
 
 private:
 
@@ -23,8 +25,10 @@ private:
     void modeChanged(Mode mode, Mode oldMode);
 
 
+
 protected:
     void initialize();
+    bool m_bHighlightBorderPoint;
     CAbstractLinePaintAlgorithm *m_pAlgorithm;
     QPoint m_startPos;
     QPoint m_endPos;

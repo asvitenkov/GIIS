@@ -13,12 +13,11 @@ void  CAbstractLineListener::initialize()
     m_endPos = QPoint(0,0);
     m_mode = MODE_NORMAL;
     this->m_pAlgorithm = new CAlgorithmDDA(m_startPos, m_endPos);
+    m_bHighlightBorderPoint = false;
 }
 
 void CAbstractLineListener::mouseMoveEvent(QPoint pos)
 {
-    //qDebug() << "mouse move to" << pos;
-
     switch (m_mouseClickState)
     {
     case MCS_UNDEFINED:
@@ -111,7 +110,7 @@ void CAbstractLineListener::drawNormalLine(QPoint start, QPoint end)
 {
     this->m_pAlgorithm->setStartPos(start);
     this->m_pAlgorithm->setEndPos(end);
-    CPainter::drawLine(m_pCoordinateView,this->m_pAlgorithm,start,end,m_mainColor,m_SecondaryColor);
+    CPainter::drawLine(m_pCoordinateView,this->m_pAlgorithm,start,end,mainColor(),secondaryColor());
 }
 
 
@@ -138,4 +137,17 @@ void CAbstractLineListener::drawTemporaryLine(QPoint start, QPoint end)
         color.setAlpha(100);
         m_tmpUndoStack.push(new CChangeCellColorCommand(m_pCoordinateView,point.x(),point.y(),color));
     }
+}
+
+
+void CAbstractLineListener::setHighlightBorderPoint(bool enable)
+{
+    m_bHighlightBorderPoint = enable;
+}
+
+QColor CAbstractLineListener::secondaryColor()
+{
+    if(m_bHighlightBorderPoint)
+        return m_secondaryColor;
+    return m_mainColor;
 }

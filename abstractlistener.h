@@ -17,6 +17,8 @@ public:
     void virtual mouseMoveEvent(QPoint pos) = 0;
     void setMainColor(QColor color);
     void setSecondaryColor(QColor color);
+    virtual QColor mainColor();
+    virtual QColor secondaryColor();
     void setMode(Mode mode);
     void virtual clearTmpObject();
     void virtual fixTmpObject();
@@ -32,7 +34,7 @@ protected:
 
     CDebugModeBox *m_pDebugModeBox;
     QColor m_mainColor;
-    QColor m_SecondaryColor;
+    QColor m_secondaryColor;
     CCoordinateView *m_pCoordinateView;
     QPoint m_currentMousePoint;
 

@@ -24,7 +24,10 @@ SOURCES += main.cpp\
     abstractlinelistener.cpp \
     listenerlinedda.cpp \
     abstractlinepaintalgorithm.cpp \
-    listenerlinebresenham.cpp
+    listenerlinebresenham.cpp \
+    algorithmround.cpp \
+    listenerroundalgorithm.cpp \
+    algorithmparabola.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -40,7 +43,10 @@ HEADERS  += mainwindow.h \
     abstractlinelistener.h \
     listenerlinedda.h \
     abstractlinepaintalgorithm.h \
-    listenerlinebresenham.h
+    listenerlinebresenham.h \
+    algorithmround.h \
+    listenerroundalgorithm.h \
+    algorithmparabola.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>709</width>
-    <height>547</height>
+    <width>691</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -157,10 +157,45 @@
                </item>
               </layout>
              </item>
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBoxHightlightEndPoints">
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBoxHightlightEndPoints">
+            <property name="text">
+             <string>Подсвечивать концы отрезка</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="algorithmLines2order">
+         <attribute name="title">
+          <string>Линии 2го порядка</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="title">
+             <string>Фигуры</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QRadioButton" name="radioBtnRound">
                <property name="text">
-                <string>Подсвечивать концы отрезка</string>
+                <string>Окружность</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton_2">
+               <property name="text">
+                <string>RadioButton</string>
                </property>
               </widget>
              </item>
@@ -168,11 +203,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="tab_3">
-         <attribute name="title">
-          <string>Линии 2го порядка</string>
-         </attribute>
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
@@ -463,7 +493,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>709</width>
+     <width>691</width>
      <height>21</height>
     </rect>
    </property>
