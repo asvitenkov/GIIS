@@ -69,10 +69,20 @@ QColor CAbstractListener::mainColor()
 
 QColor CAbstractListener::secondaryColor()
 {
-    return m_secondaryColor;
+    if(m_bHighlightMainPoints)
+        return m_secondaryColor;
+    return m_mainColor;
 }
 
-void CAbstractListener::highlightMainPoints(bool enable)
+
+
+void CAbstractListener::setHightlightMainPoints(bool enable)
 {
-    m_bHighlightMainPoints = enable;
+   m_bHighlightMainPoints = enable;
+}
+
+
+bool CAbstractListener::hightlightMainPoints()
+{
+    return m_bHighlightMainPoints;
 }

@@ -16,6 +16,9 @@ public:
     QString getInitInfo();
     void setCenterPoint(QPoint pos);
     void setPValue(int pVal);
+    StepPoints getMainPoints();
+
+
 private:
     void caseA();
     void caseB();

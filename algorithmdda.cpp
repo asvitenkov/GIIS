@@ -96,3 +96,4 @@ QString CAlgorithmDDA::getInitInfo()
 {
     return m_sInitInfo;
 }
+

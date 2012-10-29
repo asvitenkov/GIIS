@@ -140,3 +140,4 @@ StepPoints CAlgorithmBresenham::getDrawPoints()
     }
     return points;
 }
+

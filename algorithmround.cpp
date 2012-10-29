@@ -78,19 +78,19 @@ StepPoints CAlgorithmRound::getStepDrawPoint()
     {
         m_bFirstStep = false;
         array.push_back(m_center+QPoint(0,m_radius));
-        array.push_back(m_center+QPoint(m_radius,0));
         array.push_back(m_center+QPoint(0,-m_radius));
-        array.push_back(m_center+QPoint(-m_radius,0));
+        //array.push_back(m_center+QPoint(0,-m_radius));
+        //array.push_back(m_center+QPoint(-m_radius,0));
     }
     else
     {
+        array.push_back(m_center+QPoint( m_x,  m_y));
+        array.push_back(m_center+QPoint(-m_x,  m_y));
+        array.push_back(m_center+QPoint( m_x, -m_y));
+        array.push_back(m_center+QPoint(-m_x, -m_y));
 
     }
 
-    array.push_back(m_center+QPoint( m_x,  m_y));
-    array.push_back(m_center+QPoint(-m_x,  m_y));
-    array.push_back(m_center+QPoint( m_x, -m_y));
-    array.push_back(m_center+QPoint(-m_x, -m_y));
 
 
     return array;
@@ -167,3 +167,10 @@ void CAlgorithmRound::setCenterPoint(QPoint pos)
     reset();
 }
 
+
+StepPoints CAlgorithmRound::getMainPoints()
+{
+    StepPoints points;
+    points << m_center << QPoint(m_center+QPoint(0,m_radius));
+    return points;
+}

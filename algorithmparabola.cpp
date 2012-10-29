@@ -199,3 +199,12 @@ int CAlgorithmParabola::deltaH(QPoint point)
 {
     return (2*m_p*(point.x()+1)-(point.y())*(point.y()));
 }
+
+
+
+StepPoints CAlgorithmParabola::getMainPoints()
+{
+    StepPoints points;
+    points << m_center << QPoint(m_center + QPoint(0,m_p));
+    return points;
+}

@@ -113,7 +113,7 @@ void CListenerRoundAlgorithm::drawNormalRound(QPoint center, int radius)
     m_pAlgorithm->setCenterPoint(center);
     m_pAlgorithm->setRadius(radius);
 
-    CPainter::drawRound(m_pCoordinateView,m_pAlgorithm,m_centerPoint,m_mainColor,m_secondaryColor);
+    CPainter::drawRound(m_pCoordinateView,m_pAlgorithm,m_centerPoint,mainColor(),secondaryColor(),hightlightMainPoints());
 }
 
 void CListenerRoundAlgorithm::drawTemporaryRound(QPoint center, int radius)

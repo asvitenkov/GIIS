@@ -12,7 +12,7 @@ void CPainter::drawLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorith
 {
     StepPoints points = algorithm->getDrawPoints();
     QColor curColor;
-    for(unsigned int i=0; i<points.size(); i++)
+    for( int i=0; i<points.size(); i++)
     {
         if( i==0 || i == points.size() - 1 )
             curColor = secondaryColor;
@@ -22,11 +22,11 @@ void CPainter::drawLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorith
     }
 }
 
-void CPainter::drawRound(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint, QColor mainColor, QColor secondaryColor)
+void CPainter::drawRound(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint, QColor mainColor, QColor secondaryColor, bool highlight)
 {
     StepPoints points = algorithm->getDrawPoints();
     QColor curColor = mainColor;
-    for(unsigned int i=0; i<points.size(); i++)
+    for(int i=0; i<points.size(); i++)
     {
         QPoint curPoint = points.at(i);
 //        if( i==0 || i == points.size() - 1 )
@@ -34,14 +34,26 @@ void CPainter::drawRound(CCoordinateView *view, CAbstractPaintAlgorithm *algorit
 //        else curColor = mainColor;
 
         view->setCellColor(curPoint,curColor);
+    }
+
+    if(!highlight)
+        return;
+
+    StepPoints mainPoints = algorithm->getMainPoints();
+    QPoint curPoint;
+    while(!mainPoints.isEmpty())
+    {
+        curPoint = mainPoints.at(0);
+        mainPoints.pop_front();
+        view->setCellColor(curPoint,secondaryColor);
     }
 }
 
-void CPainter::drawParabola(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint, QColor mainColor, QColor secondaryColor)
+void CPainter::drawParabola(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QPoint startPoint, QColor mainColor, QColor secondaryColor, bool highlight)
 {
     StepPoints points = algorithm->getDrawPoints();
     QColor curColor = mainColor;
-    for(unsigned int i=0; i<points.size(); i++)
+    for( int i=0; i<points.size(); i++)
     {
         QPoint curPoint = points.at(i);
 //        if( i==0 || i == points.size() - 1 )
@@ -50,6 +62,18 @@ void CPainter::drawParabola(CCoordinateView *view, CAbstractPaintAlgorithm *algo
 
         view->setCellColor(curPoint,curColor);
     }
+    if(!highlight)
+        return;
+
+    StepPoints mainPoints = algorithm->getMainPoints();
+    QPoint curPoint;
+    while(!mainPoints.isEmpty())
+    {
+        curPoint = mainPoints.at(0);
+        mainPoints.pop_front();
+        view->setCellColor(curPoint,secondaryColor);
+    }
+
 }
 
 

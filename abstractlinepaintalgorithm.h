@@ -21,6 +21,8 @@ public:
     virtual void setStartPos(QPoint pos);
     virtual void setEndPos(QPoint pos);
 
+    StepPoints getMainPoints();
+
 protected:
     QPoint m_startPoint;
     QPoint m_endPoint;

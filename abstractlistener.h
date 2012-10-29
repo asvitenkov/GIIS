@@ -24,8 +24,8 @@ public:
     void virtual fixTmpObject();
     virtual void reset() = 0;
     virtual QString name();
-    virtual void highlightMainPoints(bool enable);
-
+    void setHightlightMainPoints(bool enable);
+    bool hightlightMainPoints();
 
 protected:
     void initialize();

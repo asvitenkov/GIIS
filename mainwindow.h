@@ -69,6 +69,7 @@ private:
     //CAbstractListener *m_pListener;
 
     Mode m_mode;
+    int m_lastZoomValue;
 
 private slots:
     void mouseClickOnCell(int x, int y);
@@ -83,6 +84,7 @@ private slots:
     void highlightEndPoints();
     void drawAlgorithmChanged();
     void algorithmTabIndexChanged(int index);
+    void zoomChanged(int newValue);
 };
 
 #endif // MAINWINDOW_H

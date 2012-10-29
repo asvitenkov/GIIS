@@ -23,3 +23,11 @@ void CAbstractLinePaintAlgorithm::setStartPos(QPoint pos)
 {
     m_startPoint = pos;
 }
+
+
+StepPoints CAbstractLinePaintAlgorithm::getMainPoints()
+{
+    StepPoints points;
+    points << m_startPoint << m_endPoint;
+    return points;
+}

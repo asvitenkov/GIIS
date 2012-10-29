@@ -107,6 +107,7 @@ void MainWindow::_init()
     connect(ui->radioBtnAlgorithmParabola,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
+    connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
 
     ui->radioBtnAlgDDA->setChecked(true);
     ui->radioBtnAlgBrezenhema->setChecked(false);
@@ -126,7 +127,7 @@ void MainWindow::_init()
 //    m_pDebugBox->setData(p,m_pView,QColor(Qt::red));
 
     //qDebug() << points.size();
-
+    m_lastZoomValue = ui->zoomSlider->value();
 }
 
 
@@ -234,12 +235,12 @@ void MainWindow::clearView()
 
 void MainWindow::zoomIn()
 {
-
+    m_pView->zoomIn();
 }
 
 void MainWindow::zoomOut()
 {
-
+    m_pView->zoomOut();
 }
 
 
@@ -249,11 +250,7 @@ void MainWindow::highlightEndPoints()
         m_bHighlightInitPoints = true;
     else m_bHighlightInitPoints = false;
 
-    CAbstractLineListener *lineListener = dynamic_cast<CAbstractLineListener*>(m_pCurrentListener);
-    if(lineListener != NULL)
-    {
-        lineListener->setHighlightBorderPoint(m_bHighlightInitPoints);
-    }
+    m_pCurrentListener->setHightlightMainPoints(m_bHighlightInitPoints);
 
 }
 
@@ -309,5 +306,23 @@ void MainWindow::algorithmTabIndexChanged(int index)
     else{
         qCritical() << "void MainWindow::algorithmTabIndexChanged(int index) undefined tab ";
         m_pCurrentListener = NULL;
+    }
+}
+
+
+void MainWindow::zoomChanged(int newValue)
+{
+    int res =  m_lastZoomValue - newValue;
+
+    m_lastZoomValue = newValue;
+
+    if(res>0)
+    {
+        for(int i=0; i<res; i++)
+            zoomOut();
+    }
+    else{
+        for(int i=0; i<-res; i++)
+            zoomIn();
     }
 }

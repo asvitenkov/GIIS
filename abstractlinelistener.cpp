@@ -13,7 +13,7 @@ void  CAbstractLineListener::initialize()
     m_endPos = QPoint(0,0);
     m_mode = MODE_NORMAL;
     this->m_pAlgorithm = new CAlgorithmDDA(m_startPos, m_endPos);
-    m_bHighlightBorderPoint = false;
+    m_bHighlightMainPoints = false;
 }
 
 void CAbstractLineListener::mouseMoveEvent(QPoint pos)
@@ -139,15 +139,3 @@ void CAbstractLineListener::drawTemporaryLine(QPoint start, QPoint end)
     }
 }
 
-
-void CAbstractLineListener::setHighlightBorderPoint(bool enable)
-{
-    m_bHighlightBorderPoint = enable;
-}
-
-QColor CAbstractLineListener::secondaryColor()
-{
-    if(m_bHighlightBorderPoint)
-        return m_secondaryColor;
-    return m_mainColor;
-}

@@ -114,7 +114,7 @@ void CListenerParabola::drawNormalParabola(QPoint center, int pValue)
     m_pAlgorithm->setCenterPoint(center);
     m_pAlgorithm->setPValue(pValue);
 
-    CPainter::drawParabola(m_pCoordinateView,m_pAlgorithm,m_centerPoint,m_mainColor,m_secondaryColor);
+    CPainter::drawParabola(m_pCoordinateView,m_pAlgorithm,m_centerPoint,m_mainColor,m_secondaryColor,hightlightMainPoints());
 }
 
 void CListenerParabola::drawTemporaryParabola(QPoint center, int pValue)

@@ -19,6 +19,8 @@ public:
     QString getInitInfo();
     void setCenterPoint(QPoint pos);
     void setRadius(int radius);
+    StepPoints getMainPoints();
+
 private:
     void caseA();
     void caseB();
