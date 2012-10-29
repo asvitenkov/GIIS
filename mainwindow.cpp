@@ -87,8 +87,8 @@ void MainWindow::_init()
 
     connect(m_pView,SIGNAL(clickOnCell(int,int)),this,SLOT(mouseClickOnCell(int,int)));
     connect(m_pView,SIGNAL(moveOnCell(int,int)),this,SLOT(mouseMoveOnCell(int,int)));
-    connect(ui->btnZoomIn,SIGNAL(clicked()),m_pView,SLOT(zoomIn()));
-    connect(ui->btnZoomOut,SIGNAL(clicked()),m_pView,SLOT(zoomOut()));
+//    connect(ui->btnZoomIn,SIGNAL(clicked()),m_pView,SLOT(zoomIn()));
+//    connect(ui->btnZoomOut,SIGNAL(clicked()),m_pView,SLOT(zoomOut()));
 
     connect(ui->btnMainColor,SIGNAL(clicked()),this,SLOT(setMainColor()));
     connect(ui->btnSecondaryColor,SIGNAL(clicked()),this,SLOT(setSecondaryColor()));
