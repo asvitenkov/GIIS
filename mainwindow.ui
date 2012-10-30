@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>687</width>
-    <height>476</height>
+    <width>688</width>
+    <height>660</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,7 +77,7 @@
         <property name="maximumSize">
          <size>
           <width>320</width>
-          <height>1500</height>
+          <height>120</height>
          </size>
         </property>
         <property name="font">
@@ -89,7 +89,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="documentMode">
          <bool>false</bool>
@@ -104,6 +104,9 @@
           <string>Линии первого порядка</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_8">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <property name="leftMargin">
            <number>14</number>
           </property>
@@ -143,7 +146,7 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <property name="sizeConstraint">
-              <enum>QLayout::SetMaximumSize</enum>
+              <enum>QLayout::SetMinimumSize</enum>
              </property>
              <property name="leftMargin">
               <number>14</number>
@@ -194,6 +197,9 @@
           <string>Линии 2го порядка</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_9">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <property name="leftMargin">
            <number>14</number>
           </property>
@@ -538,7 +544,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>687</width>
+     <width>688</width>
      <height>21</height>
     </rect>
    </property>

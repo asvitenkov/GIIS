@@ -176,6 +176,10 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
 {
     int nX,nY;
 
+    if(x>100 || x< -100)
+        return;
+    if(y>100 || y< -100)
+        return;
 
     nY = (y+1) * m_nCellSize;
     nX = x * m_nCellSize;
@@ -240,6 +244,11 @@ QPoint CCoordinateView::posToCell(qreal x, qreal y)
 
 QColor CCoordinateView::cellColor(int x, int y)//, bool isEmpty)
 {
+
+    if(x>100 || x< -100)
+        return QColor(Qt::white);
+    if(y>100 || y< -100)
+        return QColor(Qt::white);
 
     QGraphicsRectItem *item = m_pArray[x+130][y+130];
     if(item != NULL)
