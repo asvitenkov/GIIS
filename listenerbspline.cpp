@@ -123,7 +123,15 @@ void CListenerBSpline::drawDebugSpline(QVector<QPoint> points)
     m_pAlgorithm->reset();
     m_pAlgorithm->clearPoints();
     m_pAlgorithm->addPoints(points);
-    if(points.size()<4) return;
+    if(points.size()<4) {
+        for(int i=0; i<m_clickPoints.size(); i++)
+        {
+            QPoint point = m_clickPoints.at(i);
+            m_tmpUndoStack.push(new CChangeCellColorCommand(m_pCoordinateView, point.x(), point.y(), m_secondaryColor));
+        }
+        return;
+
+    }
 
     m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor, m_secondaryColor);
 }
@@ -144,6 +152,16 @@ void CListenerBSpline::drawNormalSpline(QVector<QPoint> points)
 
 void CListenerBSpline::drawSpline()
 {
+
+//    if(m_clickPoints.size()<4)
+//    {
+//        for(int i=0; i<m_clickPoints.size(); i++)
+//        {
+//            QPoint point = m_clickPoints.at(i);
+//            m_tmpUndoStack.push(new CChangeCellColorCommand(m_pCoordinateView, point.x(), point.y(), m_secondaryColor));
+//        }
+//        return;
+//    }
     switch(m_mode)
     {
     case MODE_DEBUG:
