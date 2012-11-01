@@ -9,6 +9,12 @@ CChangeCellColorCommand::CChangeCellColorCommand(CCoordinateView *view, int x, i
 
 
 
+CChangeCellColorCommand::CChangeCellColorCommand(CCoordinateView *view, QPoint pos, QColor color)
+    : m_pView(view), m_nPosX(pos.x()), m_nPosY(pos.y()), m_newColor(color)
+{
+    m_oldColor = view->cellColor(m_nPosX,m_nPosY);
+}
+
 void CChangeCellColorCommand::redo()
 {
     m_pView->setCellColor(m_nPosX, m_nPosY, m_newColor);

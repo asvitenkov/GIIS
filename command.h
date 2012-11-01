@@ -12,6 +12,7 @@ class CChangeCellColorCommand: public QUndoCommand
 {
 public:
     CChangeCellColorCommand(CCoordinateView *view, int x, int y, QColor color);
+    CChangeCellColorCommand(CCoordinateView *view, QPoint pos, QColor color);
     void undo();
     void redo();
 

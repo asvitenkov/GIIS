@@ -184,3 +184,17 @@ void CDebugModeBox::fix()
 
     clear();
 }
+
+
+void CDebugModeBox::hideMainPoints()
+{
+    while(m_undoStackMainPoints.canUndo())
+        m_undoStackMainPoints.undo();
+}
+
+
+void CDebugModeBox::showMainPoints()
+{
+    while(m_undoStackMainPoints.canRedo())
+        m_undoStackMainPoints.redo();
+}

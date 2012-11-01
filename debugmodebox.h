@@ -23,6 +23,8 @@ public:
     explicit CDebugModeBox(QWidget *parent = 0);
     void fix();
     ~CDebugModeBox();
+    void hideMainPoints();
+    void showMainPoints();
 
 private:
     void _init();
@@ -36,6 +38,7 @@ private:
     QColor m_secondaryColor;
     Ui::CDebugModeBox *ui;
     CCoordinateView *m_pView;
+
 
 private slots:
     void nextStep();

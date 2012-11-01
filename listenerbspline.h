@@ -22,14 +22,18 @@ private:
     void drawDebugSpline(QVector<QPoint> points);
     void drawTempoparySpline(QVector<QPoint> pointsSpline);
 
-    void update();
+    void update(QVector<QPoint> points);
+    void updateMainPoints(QVector<QPoint> points);
 
+    void clearMainPoints();
     QVector<QPoint> m_clickPoints;
 
     bool m_bMoveModeEnable;
     CAlgorithmBSpline *m_pAlgorithm;
     int m_movePointIndex;
     QPoint m_movePointPos;
+    QPoint m_mousePressPos;
+    QUndoStack m_mainPointsUndoStack;
 
 };
 
