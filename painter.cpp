@@ -77,6 +77,34 @@ void CPainter::drawParabola(CCoordinateView *view, CAbstractPaintAlgorithm *algo
 }
 
 
+void CPainter::drawBSpline(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QColor mainColor, QColor secondaryColor, bool highlight)
+{
+    StepPoints points = algorithm->getDrawPoints();
+    QColor curColor = mainColor;
+    for( int i=0; i<points.size(); i++)
+    {
+        QPoint curPoint = points.at(i);
+//        if( i==0 || i == points.size() - 1 )
+//            curColor = secondaryColor;
+//        else curColor = mainColor;
+
+        view->setCellColor(curPoint,curColor);
+    }
+    if(!highlight)
+        return;
+
+    StepPoints mainPoints = algorithm->getMainPoints();
+    QPoint curPoint;
+    while(!mainPoints.isEmpty())
+    {
+        curPoint = mainPoints.at(0);
+        mainPoints.pop_front();
+        view->setCellColor(curPoint,secondaryColor);
+    }
+
+}
+
+
 
 void CPainter::drawDebugLine(CCoordinateView *view, CAbstractPaintAlgorithm *algorithm, QTextBrowser *textBrowser, QUndoStack *undoStack, QPoint startPoint, QPoint endPoint, QColor mainColor, QColor secondaryColor)
 {

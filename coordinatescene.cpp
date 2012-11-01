@@ -22,3 +22,11 @@ void CCoordinateScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
    emit clickOnPos(event->scenePos().x(),-event->scenePos().y());
 }
 
+
+
+void CCoordinateScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    //qDebug() << "mouse release event";
+    if(event->button() != Qt::LeftButton) return;
+    emit releaseOnPos(event->scenePos().x(), -event->scenePos().y());
+}

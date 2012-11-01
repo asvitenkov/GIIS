@@ -70,7 +70,7 @@ void MainWindow::_init()
     ui->btnSecondaryColor->setAutoFillBackground(true);
     ui->btnMainColor->setAutoFillBackground(true);
 
-
+    m_mode = MODE_NORMAL;
 
 
     ui->radioBtnAlgDDA->setChecked(true);
@@ -87,6 +87,7 @@ void MainWindow::_init()
 
     connect(m_pView,SIGNAL(clickOnCell(int,int)),this,SLOT(mouseClickOnCell(int,int)));
     connect(m_pView,SIGNAL(moveOnCell(int,int)),this,SLOT(mouseMoveOnCell(int,int)));
+    connect(m_pView,SIGNAL(releaseOnScene(int,int)),this,SLOT(mouseReleaseOnCell(int,int)));
 //    connect(ui->btnZoomIn,SIGNAL(clicked()),m_pView,SLOT(zoomIn()));
 //    connect(ui->btnZoomOut,SIGNAL(clicked()),m_pView,SLOT(zoomOut()));
 
@@ -105,6 +106,7 @@ void MainWindow::_init()
     connect(ui->radioBtnAlgDDA,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnRound,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnAlgorithmParabola,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+    connect(ui->radioBtnBSpline,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
     connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
@@ -123,10 +125,16 @@ void MainWindow::_init()
 //    CAlgorithmRound *round =  new  CAlgorithmRound(QPoint(5,7),7);
 //    m_pDebugBox->setData(round,m_pView,QColor(Qt::red));
 
-//    CAlgorithmParabola *p = new CAlgorithmParabola(QPoint(0,-20),15);
+//    CAlgorithmBSpline *p = new CAlgorithmBSpline();
+//    p->addPoint(QPoint(-50,0));
+//    p->addPoint(QPoint(-50,50));
+//    p->addPoint(QPoint(0,50));
+//    p->addPoint(QPoint(0,0));
+//    p->addPoint(QPoint(-50,0));
+//    p->addPoint(QPoint(-50,50));
+//    p->addPoint(QPoint(0,50));
 //    m_pDebugBox->setData(p,m_pView,QColor(Qt::red));
 
-    //qDebug() << points.size();
     m_lastZoomValue = ui->zoomSlider->value();
 }
 
@@ -267,6 +275,7 @@ void MainWindow::drawAlgorithmChanged()
         m_pCurrentListener = *it;
         m_pCurrentListener->setMainColor(m_mainColor);
         m_pCurrentListener->setSecondaryColor(m_secondaryColor);
+        m_pCurrentListener->setMode(m_mode);
         qDebug() << "current listener is " << m_pCurrentListener->name();
     }
     else
@@ -286,6 +295,7 @@ void MainWindow::createListeners()
     m_listenersMap.insert(ui->radioBtnAlgBrezenhema, new CListenerLineBresenham(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnRound, new CListenerRoundAlgorithm(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnAlgorithmParabola, new CListenerParabola(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnBSpline, new CListenerBSpline(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
 }
 
 
@@ -302,6 +312,10 @@ void MainWindow::algorithmTabIndexChanged(int index)
     else if(curTabWidget == ui->algorithmLines2order)
     {
         ui->radioBtnRound->click();
+    }
+    else if(curTabWidget == ui->algorithmCurves)
+    {
+        ui->radioBtnBSpline->click();
     }
     else{
         qCritical() << "void MainWindow::algorithmTabIndexChanged(int index) undefined tab ";
@@ -325,4 +339,12 @@ void MainWindow::zoomChanged(int newValue)
         for(int i=0; i<-res; i++)
             zoomIn();
     }
+}
+
+
+
+void MainWindow::mouseReleaseOnCell(int x, int y)
+{
+    //qDebug() << QPoint(x,y);
+    m_pCurrentListener->mouseReleaseEvent(QPoint(x,y));
 }

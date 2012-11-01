@@ -50,11 +50,13 @@ public slots:
 
 private slots:
      void clickOnScenePos(qreal x, qreal y);
+     void releaseOnScenePos(qreal x, qreal y);
      void moveOnScenePos(int x, int y);
 
 signals:
      void clickOnCell(int x, int y);
      void moveOnCell(int x, int y);
+     void releaseOnScene(int x, int y);
 
 };
 

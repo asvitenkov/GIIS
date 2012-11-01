@@ -4,6 +4,8 @@
 #include "mainwindow.h"
 #include "coordinateview.h"
 
+#include "algorithmbspline.h"
+
 #include <QDebug>
 
 

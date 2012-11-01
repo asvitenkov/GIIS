@@ -6,7 +6,10 @@
 enum MouseClickState{
     MCS_UNDEFINED,
     MCS_FIRST_CLICK,
-    MCS_SECOND_CLICK
+    MCS_SECOND_CLICK,
+    MCS_MOVE,
+    MCS_PRESS,
+    MCS_RELEASE
 };
 
 

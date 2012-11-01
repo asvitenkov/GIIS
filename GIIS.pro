@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     algorithmround.cpp \
     listenerroundalgorithm.cpp \
     algorithmparabola.cpp \
-    listenerparabola.cpp
+    listenerparabola.cpp \
+    algorithmbspline.cpp \
+    listenerbspline.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -48,7 +50,9 @@ HEADERS  += mainwindow.h \
     algorithmround.h \
     listenerroundalgorithm.h \
     algorithmparabola.h \
-    listenerparabola.h
+    listenerparabola.h \
+    algorithmbspline.h \
+    listenerbspline.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

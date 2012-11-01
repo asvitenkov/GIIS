@@ -49,6 +49,9 @@ void CDebugModeBox::_init()
         stepPoints =  m_pAlgorithm->getStepDrawPoint();
         StepPoints::iterator it;
 
+        if(stepPoints.isEmpty())
+            continue;
+
         QPoint point;
         for(it = stepPoints.begin(); it != stepPoints.end(); it++)
         {

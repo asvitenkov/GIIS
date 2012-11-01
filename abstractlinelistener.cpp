@@ -72,7 +72,7 @@ void CAbstractLineListener::modeChanged(Mode mode, Mode oldMode)
 
 CAbstractLineListener::~CAbstractLineListener()
 {
-    qDebug() << "CAbstractLineListener::~CAbstractLineListener()";
+    //qDebug() << "CAbstractLineListener::~CAbstractLineListener()";
 }
 
 

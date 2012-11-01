@@ -15,6 +15,7 @@ public:
     virtual ~CAbstractListener();
     void virtual mousePressEvent(QPoint pos) = 0;
     void virtual mouseMoveEvent(QPoint pos) = 0;
+    virtual void mouseReleaseEvent(QPoint pos);
     void setMainColor(QColor color);
     void setSecondaryColor(QColor color);
     virtual QColor mainColor();

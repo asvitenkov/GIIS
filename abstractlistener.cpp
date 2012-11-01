@@ -35,7 +35,7 @@ void CAbstractListener::setSecondaryColor(QColor color)
 
 CAbstractListener::~CAbstractListener()
 {
-    qDebug() << "CAbstractListener::~CAbstractListener()";
+    //qDebug() << "CAbstractListener::~CAbstractListener()";
 }
 
 
@@ -85,4 +85,11 @@ void CAbstractListener::setHightlightMainPoints(bool enable)
 bool CAbstractListener::hightlightMainPoints()
 {
     return m_bHighlightMainPoints;
+}
+
+
+
+void CAbstractListener::mouseReleaseEvent(QPoint pos)
+{
+
 }

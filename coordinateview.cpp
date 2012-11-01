@@ -41,6 +41,7 @@ void CCoordinateView::_init()
     //setMinimumSize(m_nWidgetSize,m_nWidgetSize);
 
     connect(m_pScene,SIGNAL(clickOnPos(qreal,qreal)),this,SLOT(clickOnScenePos(qreal,qreal)));
+    connect(m_pScene,SIGNAL(releaseOnPos(qreal,qreal)),this,SLOT(releaseOnScenePos(qreal,qreal)));
     //connect(m_pScene,SIGNAL(moveOnPos(qreal,qreal)),this,SLOT(moveOnScenePos(qreal,qreal)));
 
     m_pVerCoordLine = NULL;
@@ -294,4 +295,11 @@ void CCoordinateView::clear(){
     memset(m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
    //m_pScene->clear();
    //_drawGrid();
+}
+
+
+void CCoordinateView::releaseOnScenePos(qreal x, qreal y)
+{
+    QPoint pos = posToCell(x,y);
+    emit releaseOnScene(pos.x(), pos.y());
 }

@@ -18,6 +18,8 @@
 
 #include "algorithmparabola.h"
 #include "listenerparabola.h"
+#include "algorithmbspline.h"
+#include "listenerbspline.h"
 
 namespace Ui {
 class MainWindow;
@@ -74,6 +76,7 @@ private:
 private slots:
     void mouseClickOnCell(int x, int y);
     void mouseMoveOnCell(int x, int y);
+    void mouseReleaseOnCell(int x, int y);
     void setMainColor();
     void setSecondaryColor();
     void debugModeEnable();
