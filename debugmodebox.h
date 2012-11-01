@@ -18,12 +18,12 @@ class CDebugModeBox : public QGroupBox
     Q_OBJECT
     
 public:
-    void setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView *view, QColor color);
+    void setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView *view, QColor color, QColor secondaryColor);
     void clear();
     explicit CDebugModeBox(QWidget *parent = 0);
     void fix();
     ~CDebugModeBox();
-    
+
 private:
     void _init();
     void _lastItem();
@@ -31,7 +31,9 @@ private:
     void _middleItem();
     CAbstractPaintAlgorithm *m_pAlgorithm;
     QUndoStack m_undoStack;
+    QUndoStack m_undoStackMainPoints;
     QColor m_color;
+    QColor m_secondaryColor;
     Ui::CDebugModeBox *ui;
     CCoordinateView *m_pView;
 

@@ -139,7 +139,7 @@ void CListenerRoundAlgorithm::drawDebugRound(QPoint center, int radius)
     clearTmpObject();
     m_pAlgorithm->setCenterPoint(center);
     m_pAlgorithm->setRadius(radius);
-    m_pDebugModeBox->setData(m_pAlgorithm,m_pCoordinateView,mainColor());
+    m_pDebugModeBox->setData(m_pAlgorithm,m_pCoordinateView,mainColor(), m_secondaryColor);
 }
 
 

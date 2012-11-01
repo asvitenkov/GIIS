@@ -140,5 +140,5 @@ void CListenerParabola::drawDebugParabola(QPoint center, int pValue)
     clearTmpObject();
     this->m_pAlgorithm->setCenterPoint(center);
     this->m_pAlgorithm->setPValue(pValue);
-    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor);
+    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor, m_secondaryColor);
 }

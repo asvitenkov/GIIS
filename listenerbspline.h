@@ -13,7 +13,7 @@ public:
     void mouseMoveEvent(QPoint pos);
     void mouseReleaseEvent(QPoint pos);
     void reset();
-
+    void setHightlightMainPoints(bool enable);
 private:
     void initialize();
     void modeChanged(Mode mode, Mode oldMode);

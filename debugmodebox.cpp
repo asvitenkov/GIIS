@@ -1,7 +1,7 @@
 #include "debugmodebox.h"
 #include "ui_debugmodebox.h"
 
-void CDebugModeBox::setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView *view, QColor color)
+void CDebugModeBox::setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView *view, QColor color, QColor secondaryColor)
 {
     clear();
 
@@ -9,9 +9,15 @@ void CDebugModeBox::setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView 
     m_color = color;
     m_pView = view;
 
+
+    m_secondaryColor = secondaryColor;
+
+
     _init();
 
     this->setEnabled(true);
+
+
 
 }
 
@@ -37,7 +43,17 @@ void CDebugModeBox::_init()
     // создаём стек точек и текстовой информации
     m_pAlgorithm->reset();
     StepPoints stepPoints;
+    QPoint point;
     std::vector<QUndoCommand *> undoCommands;
+
+    StepPoints mainPoints = m_pAlgorithm->getMainPoints();
+    StepPoints::iterator it;
+
+    for(it=mainPoints.begin(); it!=mainPoints.end(); it++)
+    {
+        point = *it;
+        m_undoStackMainPoints.push(new CChangeCellColorCommand(m_pView, point.x(), point.y(),m_secondaryColor));
+    }
 
     // добавляем начальную информацию
     m_undoStack.push(new CChangeBrowserTextCommand(ui->textBrowser,m_pAlgorithm->getInitInfo()));
@@ -52,7 +68,7 @@ void CDebugModeBox::_init()
         if(stepPoints.isEmpty())
             continue;
 
-        QPoint point;
+
         for(it = stepPoints.begin(); it != stepPoints.end(); it++)
         {
             point = *it;
@@ -148,14 +164,23 @@ void CDebugModeBox::clear()
     this->setDisabled(true);
     goToBegin();
     ui->textBrowser->clear();
-    //if(m_pAlgorithm!=NULL) {delete m_pAlgorithm; m_pAlgorithm = NULL;}
     m_undoStack.clear();
+
+    while(m_undoStackMainPoints.canUndo())
+        m_undoStackMainPoints.undo();
+    m_undoStackMainPoints.clear();
 }
 
 
 void CDebugModeBox::fix()
 {
+
+    while(m_undoStackMainPoints.canUndo())
+        m_undoStackMainPoints.undo();
+    m_undoStackMainPoints.clear();
+    goToBegin();
     goToEnd();
     m_undoStack.clear();
+
     clear();
 }

@@ -119,7 +119,7 @@ void CAbstractLineListener::drawDebugLine(QPoint start, QPoint end)
     clearTmpObject();
     this->m_pAlgorithm->setStartPos(start);
     this->m_pAlgorithm->setEndPos(end);
-    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor);
+    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor, m_secondaryColor);
 }
 
 void CAbstractLineListener::drawTemporaryLine(QPoint start, QPoint end)

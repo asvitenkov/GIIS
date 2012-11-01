@@ -14,7 +14,7 @@ void CListenerBSpline::initialize()
 {
     CAbstractListener::initialize();
     m_mouseClickState = MCS_RELEASE;
-    m_bHighlightMainPoints = false;
+    m_bHighlightMainPoints = true;
     m_mode = MODE_NORMAL;
     if(m_pAlgorithm!=NULL) delete m_pAlgorithm;
     m_pAlgorithm = new CAlgorithmBSpline();
@@ -124,7 +124,8 @@ void CListenerBSpline::drawDebugSpline(QVector<QPoint> points)
     m_pAlgorithm->clearPoints();
     m_pAlgorithm->addPoints(points);
     if(points.size()<4) return;
-    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor);
+
+    m_pDebugModeBox->setData(this->m_pAlgorithm,m_pCoordinateView,m_mainColor, m_secondaryColor);
 }
 
 
@@ -178,8 +179,8 @@ void CListenerBSpline::drawTempoparySpline(QVector<QPoint> pointsSpline)
     }
 
 
-    if(!hightlightMainPoints())
-        return;
+    //if(!hightlightMainPoints())
+    //    return;
 
     StepPoints mainPoints = m_pAlgorithm->getMainPoints();
     QPoint curPoint;
@@ -187,7 +188,7 @@ void CListenerBSpline::drawTempoparySpline(QVector<QPoint> pointsSpline)
     {
         curPoint = mainPoints.at(0);
         mainPoints.pop_front();
-        m_tmpUndoStack.push(new CChangeCellColorCommand(m_pCoordinateView,curPoint.x(),curPoint.y(),secondaryColor()));
+        m_tmpUndoStack.push(new CChangeCellColorCommand(m_pCoordinateView,curPoint.x(),curPoint.y(),m_secondaryColor));
     }
 }
 
@@ -196,6 +197,17 @@ void CListenerBSpline::drawTempoparySpline(QVector<QPoint> pointsSpline)
 void CListenerBSpline::update()
 {
     clearTmpObject();
+    if( m_mode == MODE_DEBUG )
+    {
+        m_pDebugModeBox->clear();
+        drawDebugSpline(m_clickPoints);
+        return;
+    }
     drawTempoparySpline(m_clickPoints);
 
+}
+
+void CListenerBSpline::setHightlightMainPoints(bool enable)
+{
+    m_bHighlightMainPoints = true;
 }
