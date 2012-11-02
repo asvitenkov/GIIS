@@ -20,6 +20,7 @@
 #include "listenerparabola.h"
 #include "algorithmbspline.h"
 #include "listenerbspline.h"
+#include "listenerbese.h"
 
 namespace Ui {
 class MainWindow;

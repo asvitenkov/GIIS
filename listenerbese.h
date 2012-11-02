@@ -1,14 +1,14 @@
-#ifndef LISTENERBSPLINE_H
-#define LISTENERBSPLINE_H
+#ifndef LISTENERBESE_H
+#define LISTENERBESE_H
 
-#include "algorithmbspline.h"
 #include "abstractlistener.h"
+#include "algorithmbese.h"
 
-class CListenerBSpline : public CAbstractListener
+class CListenerBese : public CAbstractListener
 {
 public:
-    explicit CListenerBSpline(CCoordinateView *view, CDebugModeBox *box, QColor mainColor, QColor secondaryColor);
-    ~CListenerBSpline();
+    explicit CListenerBese(CCoordinateView *view, CDebugModeBox *box, QColor mainColor, QColor secondaryColor);
+    ~CListenerBese();
     void mousePressEvent(QPoint pos);
     void mouseMoveEvent(QPoint pos);
     void mouseReleaseEvent(QPoint pos);
@@ -30,11 +30,12 @@ private:
     QVector<QPoint> m_clickPoints;
 
     bool m_bMoveModeEnable;
-    CAlgorithmBSpline *m_pAlgorithm;
+    //CAlgorithmBSpline *m_pAlgorithm;
+    CAlgorithmBese *m_pAlgorithm;
     int m_movePointIndex;
     QPoint m_movePointPos;
     QPoint m_mousePressPos;
     QUndoStack m_mainPointsUndoStack;
 };
 
-#endif // LISTENERBSPLINE_H
+#endif // LISTENERBESE_H

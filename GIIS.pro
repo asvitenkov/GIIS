@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     algorithmparabola.cpp \
     listenerparabola.cpp \
     algorithmbspline.cpp \
-    listenerbspline.cpp
+    listenerbspline.cpp \
+    listenerbese.cpp \
+    algorithmbese.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -52,7 +54,9 @@ HEADERS  += mainwindow.h \
     algorithmparabola.h \
     listenerparabola.h \
     algorithmbspline.h \
-    listenerbspline.h
+    listenerbspline.h \
+    listenerbese.h \
+    algorithmbese.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

@@ -107,6 +107,7 @@ void MainWindow::_init()
     connect(ui->radioBtnRound,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnAlgorithmParabola,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnBSpline,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+    connect(ui->radioBtnBese,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
     connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
@@ -296,6 +297,7 @@ void MainWindow::createListeners()
     m_listenersMap.insert(ui->radioBtnRound, new CListenerRoundAlgorithm(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnAlgorithmParabola, new CListenerParabola(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnBSpline, new CListenerBSpline(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnBese, new CListenerBese(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
 }
 
 
