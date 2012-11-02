@@ -15,6 +15,7 @@ public:
     void reset();
     void setHightlightMainPoints(bool enable);
 private:
+    void fixSpline();
     void initialize();
     void modeChanged(Mode mode, Mode oldMode);
     void drawSpline();

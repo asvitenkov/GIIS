@@ -72,8 +72,15 @@ void CListenerBSpline::mouseMoveEvent(QPoint pos)
 void CListenerBSpline::mousePressEvent(QPoint pos)
 {
     m_mouseClickState = MCS_PRESS;
+
     m_mousePressPos = pos;
 
+
+}
+
+void CListenerBSpline::fixSpline()
+{
+    reset();
 }
 
 
@@ -85,7 +92,13 @@ void CListenerBSpline::mouseReleaseEvent(QPoint pos)
     }
     if(m_mouseClickState == MCS_PRESS)
     {
-        m_clickPoints.push_back(pos);
+        //        if(pos == m_mousePressPos)
+        //        {
+        if( !m_clickPoints.isEmpty() && m_clickPoints.contains(pos) && m_mousePressPos == m_clickPoints.last() )
+            fixSpline();
+        //        }
+        else
+            m_clickPoints.push_back(pos);
     }
 
     update(m_clickPoints);
@@ -94,12 +107,13 @@ void CListenerBSpline::mouseReleaseEvent(QPoint pos)
 
 void CListenerBSpline::reset()
 {
-    m_pDebugModeBox->fix();
+    if(m_mode == MODE_DEBUG)
+        m_pDebugModeBox->fix();
     clearMainPoints();
     m_tmpUndoStack.clear();
     m_clickPoints.clear();
 
-    initialize();
+    //initialize();
 }
 
 

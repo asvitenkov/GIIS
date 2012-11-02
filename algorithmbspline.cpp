@@ -35,6 +35,14 @@ bool CAlgorithmBSpline::nextStep()
         m_newSection = false;
         m_currentIndex++;
 
+        while(m_currentIndex < m_pointsList.size()-1 )
+        {
+            if(m_pointsList.at(m_currentIndex) != m_pointsList.at(m_currentIndex+1))
+                break;
+            else
+                m_currentIndex++;
+        }
+
         if(m_currentIndex > m_pointsList.size()-3 )
             return false;
 
@@ -170,5 +178,14 @@ void CAlgorithmBSpline::clearPoints()
 
 void CAlgorithmBSpline::addPoints(QVector<QPoint> points)
 {
-    m_pointsList << points;
+    //m_pointsList << points;
+    QPoint point;
+    for(int i=0; i<points.size(); i++)
+    {
+        point = points.at(i);
+        if(m_pointsList.isEmpty())
+            m_pointsList << point;
+        else if(m_pointsList.last()!= point)
+            m_pointsList << point;
+    }
 }

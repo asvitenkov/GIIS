@@ -35,6 +35,12 @@ CDebugModeBox::CDebugModeBox(QWidget *parent)
     connect(ui->btnToEnd,SIGNAL(clicked()),this,SLOT(goToEnd()));
     connect(&m_undoStack,SIGNAL(indexChanged(int)),this,SLOT(stackIndexChanged(int)));
 
+    ui->btnNextStep->setShortcut(Qt::CTRL + Qt::Key_N);
+    ui->btnPreviosStep->setShortcut(Qt::CTRL + Qt::Key_P);
+    ui->btnToBegin->setShortcut(Qt::CTRL + Qt::Key_S);
+    ui->btnToEnd->setShortcut(Qt::CTRL + Qt::Key_E);
+
+
 }
 
 void CDebugModeBox::_init()
