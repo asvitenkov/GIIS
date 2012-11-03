@@ -21,7 +21,7 @@ void CAlgorithmLineFilling::_init()
 StepPoints CAlgorithmLineFilling::getDrawPoints()
 {
 
-    reset();
+    //reset();
 
     StepPoints poitns;
     m_stack.push_back(m_startPoint);
@@ -30,21 +30,22 @@ StepPoints CAlgorithmLineFilling::getDrawPoints()
     int anchor;
     while(!m_stack.isEmpty())
     {
-        curPoint = m_stack.pop();
+        curPoint = m_stack.at(0);
+        m_stack.pop_front();
         fillLine(curPoint,left, right, poitns);
         int leftX,rightX;
         leftX = left.x();
         rightX = right.x();
-        if(checkLine(leftX, rightX, curPoint.y()-1, anchor))
-        {
-            m_stack.push_back(QPoint(anchor, curPoint.y()-1));
-        }
+        checkLine(leftX, rightX, curPoint.y()-1, anchor);
+//        {
+//            m_stack.push_back(QPoint(anchor, curPoint.y()-1));
+//        }
         leftX = left.x();
         rightX = right.x();
-        if(checkLine(leftX, rightX, curPoint.y()+1, anchor))
-        {
-            m_stack.push_back(QPoint(anchor, curPoint.y()+1));
-        }
+        checkLine(leftX, rightX, curPoint.y()+1, anchor);
+//        {
+//            m_stack.push_back(QPoint(anchor, curPoint.y()+1));
+//        }
 
     }
 
@@ -53,22 +54,35 @@ StepPoints CAlgorithmLineFilling::getDrawPoints()
 
 bool CAlgorithmLineFilling::nextStep()
 {
-
+    if(m_bBeginState)
+    {
+        m_bBeginState = false;
+        m_resultPoints = getDrawPoints();
+        return true;
+    }
+    if(!m_resultPoints.isEmpty())
+        return true;
+    return false;
 }
 
 StepPoints CAlgorithmLineFilling::getStepDrawPoint()
 {
-
+    StepPoints points;
+    //points <<m_resultPoints.first();
+    m_curPoint = m_resultPoints.at(0);
+    points.push_back(m_curPoint);
+    m_resultPoints.pop_front();
+    return points;
 }
 
 void CAlgorithmLineFilling::reset()
 {
-
+    m_bBeginState = true;
 }
 
 QString CAlgorithmLineFilling::getInfo()
 {
-    return "";
+    return QString("(%1,%2)").arg(m_curPoint.x()).arg(m_curPoint.y());
 }
 
 
@@ -80,7 +94,8 @@ QString CAlgorithmLineFilling::getInitInfo()
 
 StepPoints CAlgorithmLineFilling::getMainPoints()
 {
-
+    StepPoints points;
+    return points;
 }
 
 void CAlgorithmLineFilling::setMatrix(bool **matrix)
@@ -101,21 +116,21 @@ void CAlgorithmLineFilling::fillLine(QPoint start, QPoint &leftBorder, QPoint &r
 {
     int y = start.y();
     int x = start.x();
-    result.push_back(start);
+    result.push_back(start-QPoint(130,130));
     m_pMatrix[x][y] = true;
-    while(!m_pMatrix[x-1][y] && x>0)
+    while(!m_pMatrix[x-1][y] && x>10)
     {
         x--;
-        result.push_back(QPoint(x,y));
+        result.push_back(QPoint(x,y)-QPoint(130,130));
         m_pMatrix[x][y] = true;
     }
 
     leftBorder = QPoint(x,y);
     x = start.x();
-    while(!m_pMatrix[x+1][y] && x<260)
+    while(!m_pMatrix[x+1][y] && x<240)
     {
         x++;
-        result.push_back(QPoint(x,y));
+        result.push_back(QPoint(x,y)-QPoint(130,130));
         m_pMatrix[x][y] = true;
     }
     rigthBorder = QPoint(x,y);
@@ -124,13 +139,20 @@ void CAlgorithmLineFilling::fillLine(QPoint start, QPoint &leftBorder, QPoint &r
 
 bool CAlgorithmLineFilling::checkLine(int &leftX, int &rightX, int y, int &anchor)
 {
+    bool newPart = true;
     for(int i=leftX; i<=rightX; i++)
     {
-        if(m_pMatrix[i][y]==false)
+        if(m_pMatrix[i][y])
         {
-            anchor = i;
-            return true;
-
+            newPart = true;
+        }
+        else
+        {
+            if(newPart)
+            {
+                newPart = false;
+                m_stack.push_back(QPoint(i,y));
+            }
         }
     }
     return false;

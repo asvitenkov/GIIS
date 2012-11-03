@@ -31,6 +31,7 @@ private:
     QPoint m_leftBorder;
     QPoint m_rightBorder;
     QPoint m_startPoint;
+    QPoint m_curPoint;
     QVector<QPoint> m_resultPoints;
     bool m_bBeginState;
 

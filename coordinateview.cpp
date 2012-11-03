@@ -62,7 +62,11 @@ void CCoordinateView::_init()
 //    }
 
 
-    memset(&m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
+    //memset(&m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
+
+    for(int i=0; i<260; i++)
+        for(int j=0; j<260; j++)
+            m_pArray[i][j] = NULL;
 
     _drawGrid();
 
@@ -177,9 +181,9 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
 {
     int nX,nY;
 
-    if(x>100 || x< -100)
+    if(x>90 || x< -90)
         return;
-    if(y>100 || y< -100)
+    if(y>90 || y< -90)
         return;
 
     nY = (y+1) * m_nCellSize;
@@ -246,9 +250,9 @@ QPoint CCoordinateView::posToCell(qreal x, qreal y)
 QColor CCoordinateView::cellColor(int x, int y)//, bool isEmpty)
 {
 
-    if(x>100 || x< -100)
+    if(x>90 || x< -90)
         return QColor(Qt::white);
-    if(y>100 || y< -100)
+    if(y>90 || y< -90)
         return QColor(Qt::white);
 
     QGraphicsRectItem *item = m_pArray[x+130][y+130];
@@ -284,15 +288,18 @@ void CCoordinateView::clear(){
         rItem = dynamic_cast<QGraphicsRectItem*>(*it);
         if(rItem != NULL)
         {
-            bool ok = false;
-            int x = rItem->data(0).toInt(&ok);
-            int y = rItem->data(1).toInt(&ok);
-            m_pArray[x+130][y+130] = NULL;
+            //bool ok = false;
+            //int x = rItem->data(0).toInt(&ok);
+            //int y = rItem->data(1).toInt(&ok);
+            //m_pArray[x+130][y+130] = NULL;
             m_pScene->removeItem(rItem);
             delete rItem;
         }
     }
-    memset(m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
+    //memset(m_pArray,NULL,260*260*sizeof(QGraphicsRectItem*));
+    for(int i=0; i<260; i++)
+        for(int j=0; j<260; j++)
+            m_pArray[i][j] = NULL;
    //m_pScene->clear();
    //_drawGrid();
 }
@@ -302,4 +309,17 @@ void CCoordinateView::releaseOnScenePos(qreal x, qreal y)
 {
     QPoint pos = posToCell(x,y);
     emit releaseOnScene(pos.x(), pos.y());
+}
+
+void CCoordinateView::getBoolMatrix(bool **matrix, QColor color)
+{
+
+    for(int i=0; i<260; i++)
+        for(int j=0; j<260; j++)
+        {
+            if(cellColor(i-130,j-130)!=color)
+                matrix[i][j]=true;
+            else
+                matrix[i][j]=false;
+        }
 }

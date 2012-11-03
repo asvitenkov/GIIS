@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     listenerbspline.cpp \
     listenerbese.cpp \
     algorithmbese.cpp \
-    algorithmlinefilling.cpp
+    algorithmlinefilling.cpp \
+    listenerlinefilling.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -58,7 +59,8 @@ HEADERS  += mainwindow.h \
     listenerbspline.h \
     listenerbese.h \
     algorithmbese.h \
-    algorithmlinefilling.h
+    algorithmlinefilling.h \
+    listenerlinefilling.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

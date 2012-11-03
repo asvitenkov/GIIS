@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>687</width>
-    <height>443</height>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <property name="documentMode">
          <bool>false</bool>
@@ -300,6 +300,51 @@
               <widget class="QRadioButton" name="radioBtnBese">
                <property name="text">
                 <string>Кривая Безье</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="algorithmFillingArea">
+         <attribute name="title">
+          <string>Закраска</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_13">
+          <property name="leftMargin">
+           <number>14</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>3</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupBox_4">
+            <property name="title">
+             <string>Закраска</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_14">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="radioBtnLineFilling">
+               <property name="text">
+                <string>Метод построчного сканирования</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="radioButton_2">
+               <property name="text">
+                <string>RadioButton</string>
                </property>
               </widget>
              </item>

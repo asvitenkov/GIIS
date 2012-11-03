@@ -4,6 +4,7 @@
 #include "abstractlistener.h"
 #include "algorithmbese.h"
 
+
 class CListenerBese : public CAbstractListener
 {
 public:

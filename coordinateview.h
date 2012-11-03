@@ -20,6 +20,8 @@ public:
     void setCellColor(int x, int y, QColor color);
     void setCellColor(QPoint cellPos, QColor color);
     QColor cellColor(int x, int y);
+    void getBoolMatrix(bool **matrix, QColor color);
+
 
 private:
     QPoint m_lastCellPos;

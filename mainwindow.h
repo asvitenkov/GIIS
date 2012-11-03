@@ -21,6 +21,7 @@
 #include "algorithmbspline.h"
 #include "listenerbspline.h"
 #include "listenerbese.h"
+#include "listenerlinefilling.h"
 
 namespace Ui {
 class MainWindow;

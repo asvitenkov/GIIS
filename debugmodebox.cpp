@@ -82,6 +82,7 @@ void CDebugModeBox::_init()
         }
         undoCommands.push_back(new CChangeBrowserTextCommand(ui->textBrowser,m_pAlgorithm->getInfo()));
         m_undoStack.push( new CCommandGroup(undoCommands));
+        //qDebug()<< m_undoStack.count();
     }
 
 
