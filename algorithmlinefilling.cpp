@@ -118,7 +118,7 @@ void CAlgorithmLineFilling::fillLine(QPoint start, QPoint &leftBorder, QPoint &r
     int x = start.x();
     result.push_back(start-QPoint(130,130));
     m_pMatrix[x][y] = true;
-    while(!m_pMatrix[x-1][y] && x>10)
+    while(!m_pMatrix[x-1][y] && x>30)
     {
         x--;
         result.push_back(QPoint(x,y)-QPoint(130,130));
@@ -127,7 +127,7 @@ void CAlgorithmLineFilling::fillLine(QPoint start, QPoint &leftBorder, QPoint &r
 
     leftBorder = QPoint(x,y);
     x = start.x();
-    while(!m_pMatrix[x+1][y] && x<240)
+    while(!m_pMatrix[x+1][y] && x<200)
     {
         x++;
         result.push_back(QPoint(x,y)-QPoint(130,130));

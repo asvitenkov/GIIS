@@ -183,7 +183,7 @@ void CCoordinateView::setCellColor(int x, int y, QColor color)
 
     if(x>90 || x< -90)
         return;
-    if(y>90 || y< -90)
+    if(y>60 || y< -60)
         return;
 
     nY = (y+1) * m_nCellSize;
@@ -252,7 +252,7 @@ QColor CCoordinateView::cellColor(int x, int y)//, bool isEmpty)
 
     if(x>90 || x< -90)
         return QColor(Qt::white);
-    if(y>90 || y< -90)
+    if(y>60 || y< -60)
         return QColor(Qt::white);
 
     QGraphicsRectItem *item = m_pArray[x+130][y+130];

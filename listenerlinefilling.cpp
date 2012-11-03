@@ -65,7 +65,7 @@ void CListenerLineFilling::fillingAreaDebug()
     updateMatrix();
     m_pAlgorithm->setMatrix(m_pMatrix);
 
-    m_pDebugModeBox->setData(m_pAlgorithm, m_pCoordinateView,QColor(Qt::red), QColor(Qt::red));
+    m_pDebugModeBox->setData(m_pAlgorithm, m_pCoordinateView,m_secondaryColor, m_mainColor);
 }
 
 void CListenerLineFilling::fillingAreaNormal()
@@ -77,7 +77,7 @@ void CListenerLineFilling::fillingAreaNormal()
     StepPoints points = m_pAlgorithm->getDrawPoints();
     while(!points.isEmpty())
     {
-        m_pCoordinateView->setCellColor((points.first()),mainColor());
+        m_pCoordinateView->setCellColor((points.first()),m_secondaryColor);
         points.pop_front();
     }
 }
