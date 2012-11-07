@@ -38,6 +38,8 @@ void CListenerRoundAlgorithm::mouseMoveEvent(QPoint pos)
         // рисуется новый временный объект
         drawTemporaryRound(m_centerPoint, distance(m_centerPoint,pos));
         break;
+    default:
+        break;
     }
 }
 

@@ -1,5 +1,6 @@
 #include "debugmodebox.h"
 #include "ui_debugmodebox.h"
+#include "debuganimation.h"
 
 void CDebugModeBox::setData(CAbstractPaintAlgorithm *algorithm, CCoordinateView *view, QColor color, QColor secondaryColor)
 {
@@ -35,10 +36,30 @@ CDebugModeBox::CDebugModeBox(QWidget *parent)
     connect(ui->btnToEnd,SIGNAL(clicked()),this,SLOT(goToEnd()));
     connect(&m_undoStack,SIGNAL(indexChanged(int)),this,SLOT(stackIndexChanged(int)));
 
+    //connect(ui->pushBtnNextTh,SIGNAL(clicked()),this,SLOT(nextStepTh()));
+    //connect(ui->pushBtnPrevTh,SIGNAL(clicked()),this,SLOT(prevStepTh()));
+    connect(ui->pushBtnStartTh,SIGNAL(clicked()),this,SLOT(startTh()));
+
+    connect(ui->timeSlider,SIGNAL(valueChanged(int)),this,SLOT(valueChanged(int)));
+
     ui->btnNextStep->setShortcut(Qt::CTRL + Qt::Key_N);
     ui->btnPreviosStep->setShortcut(Qt::CTRL + Qt::Key_P);
     ui->btnToBegin->setShortcut(Qt::CTRL + Qt::Key_S);
     ui->btnToEnd->setShortcut(Qt::CTRL + Qt::Key_E);
+
+
+    m_pAnimationThread = new QThread();
+    m_pDebugAnimation = new CDebugAnimation(m_pView,this,timerInterval(),m_pAnimationThread);
+
+    QObject::connect(m_pAnimationThread,SIGNAL(started()),m_pDebugAnimation,SLOT(process()));
+    QObject::connect(this,SIGNAL(startAnimation()),m_pDebugAnimation,SLOT(start()));
+    //m_pDebugAnimation->moveToThread(m_pAnimationThread);
+    m_pAnimationThread->start();
+    QObject::connect(m_pDebugAnimation,SIGNAL(finished()),this,SLOT(finishThread()));
+    //QObject::connect(m_pDebugAnimation,SIGNAL(finished()),m_pDebugAnimation,SLOT(deleteLater()));
+    //QObject::connect(m_pAnimationThread,SIGNAL(finished()),m_pAnimationThread,SLOT(deleteLater()));
+
+    m_bIsDebugEnable = false;
 
 
 }
@@ -166,6 +187,12 @@ void CDebugModeBox::_middleItem()
     ui->btnToEnd->setEnabled(true);
 }
 
+int CDebugModeBox::timerInterval()
+{
+    qDebug() << ui->timeSlider->value()*10+1;
+    return ui->timeSlider->value()*10+1;
+}
+
 void CDebugModeBox::clear()
 {
     this->setDisabled(true);
@@ -204,4 +231,74 @@ void CDebugModeBox::showMainPoints()
 {
     while(m_undoStackMainPoints.canRedo())
         m_undoStackMainPoints.redo();
+}
+
+
+bool CDebugModeBox::canRedo()
+{
+    return m_undoStack.canRedo();
+}
+
+bool CDebugModeBox::canUndo()
+{
+    return m_undoStack.canUndo();
+}
+
+void CDebugModeBox::undo()
+{
+    previosStep();
+}
+
+
+void CDebugModeBox::redo()
+{
+    nextStep();
+}
+
+
+void CDebugModeBox::nextStepTh()
+{
+
+}
+
+
+void CDebugModeBox::prevStepTh()
+{
+
+}
+
+
+void CDebugModeBox::startTh()
+{
+
+    if(!m_bIsDebugEnable)
+    {
+        ui->pushBtnStartTh->setText("Стоп");
+        //m_pThread->pause();
+        m_bIsDebugEnable = true;
+        m_pDebugAnimation->setInterval(timerInterval());
+        m_pDebugAnimation->start();
+        //QMetaObject::invokeMethod()
+        //emit startAnimation();
+        //m_pDebugAnimation->start();
+    }
+    else
+    {
+        m_pDebugAnimation->stop();
+        ui->pushBtnStartTh->setText("Старт");
+        m_bIsDebugEnable = false;
+    }
+}
+
+
+
+void CDebugModeBox::finishThread()
+{
+    ui->pushBtnStartTh->setText("Старт");
+    m_bIsDebugEnable = false;
+}
+
+void CDebugModeBox::valueChanged(int value)
+{
+    m_pDebugAnimation->setInterval(timerInterval());
 }

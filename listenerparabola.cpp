@@ -39,6 +39,8 @@ void CListenerParabola::mouseMoveEvent(QPoint pos)
         // рисуется новый временный объект
         drawTemporaryParabola(m_centerPoint,-m_centerPoint.y() + pos.y());
         break;
+    default:
+        break;
     }
 }
 

@@ -113,6 +113,9 @@ void MainWindow::_init()
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
     connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
 
+
+    //connect(ui->btnRunThread, SIGNAL(clicked()),this,SLOT(runThread()));
+
     ui->radioBtnAlgDDA->setChecked(true);
     ui->radioBtnAlgBrezenhema->setChecked(false);
     ui->radioBtnDefaultMode->setChecked(true);
@@ -359,3 +362,4 @@ void MainWindow::mouseReleaseOnCell(int x, int y)
     //qDebug() << QPoint(x,y);
     m_pCurrentListener->mouseReleaseEvent(QPoint(x,y));
 }
+

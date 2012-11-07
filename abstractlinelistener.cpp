@@ -30,6 +30,8 @@ void CAbstractLineListener::mouseMoveEvent(QPoint pos)
         // рисуется новый временный объект
         drawTemporaryLine(m_startPos, pos);
         break;
+    default:
+        break;
     }
 }
 
