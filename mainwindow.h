@@ -22,7 +22,8 @@
 #include "listenerbspline.h"
 #include "listenerbese.h"
 #include "listenerlinefilling.h"
-
+#include "algorithmvertexlinefilling.h"
+#include "listenervertexlinefilling.h"
 
 
 namespace Ui {

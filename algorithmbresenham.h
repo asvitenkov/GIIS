@@ -20,9 +20,9 @@ public:
 private:
     void _init();
     inline int _sign(int n);
-    QPoint m_startPoint;
-    QPoint m_endPoint;
-    QPointF m_curPoint;
+    //QPoint m_startPoint;
+    //QPoint m_endPoint;
+    //QPointF m_curPoint;
     bool m_bFirstStep;
     int m_nError;
     int m_nLength;

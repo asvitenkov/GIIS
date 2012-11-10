@@ -342,9 +342,9 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QRadioButton" name="radioButton_2">
+              <widget class="QRadioButton" name="radioBtnLineVertexFilling">
                <property name="text">
-                <string>RadioButton</string>
+                <string>Построчный</string>
                </property>
               </widget>
              </item>

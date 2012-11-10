@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     algorithmbese.cpp \
     algorithmlinefilling.cpp \
     listenerlinefilling.cpp \
-    debuganimation.cpp
+    debuganimation.cpp \
+    algorithmvertexlinefilling.cpp \
+    listenervertexlinefilling.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -62,7 +64,9 @@ HEADERS  += mainwindow.h \
     algorithmbese.h \
     algorithmlinefilling.h \
     listenerlinefilling.h \
-    debuganimation.h
+    debuganimation.h \
+    algorithmvertexlinefilling.h \
+    listenervertexlinefilling.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

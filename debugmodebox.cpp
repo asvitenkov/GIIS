@@ -209,6 +209,8 @@ void CDebugModeBox::clear()
 void CDebugModeBox::fix()
 {
 
+    m_pDebugAnimation->stop();
+
     while(m_undoStackMainPoints.canUndo())
         m_undoStackMainPoints.undo();
     m_undoStackMainPoints.clear();
@@ -217,6 +219,7 @@ void CDebugModeBox::fix()
     m_undoStack.clear();
 
     clear();
+
 }
 
 

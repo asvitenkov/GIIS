@@ -26,7 +26,7 @@ MainWindow::~MainWindow()
     {
         listener = *it;
         delete listener;
-        it++;
+        ++it;
     }
 
 
@@ -109,6 +109,7 @@ void MainWindow::_init()
     connect(ui->radioBtnBSpline,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnBese,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnLineFilling,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+    connect(ui->radioBtnLineVertexFilling,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
     connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
@@ -127,18 +128,16 @@ void MainWindow::_init()
     _setSecondaryColor(m_secondaryColor);
 
 
-//    CAlgorithmRound *round =  new  CAlgorithmRound(QPoint(5,7),7);
-//    m_pDebugBox->setData(round,m_pView,QColor(Qt::red));
-
-//    CAlgorithmBSpline *p = new CAlgorithmBSpline();
-//    p->addPoint(QPoint(-50,0));
-//    p->addPoint(QPoint(-50,50));
-//    p->addPoint(QPoint(0,50));
-//    p->addPoint(QPoint(0,0));
-//    p->addPoint(QPoint(-50,0));
-//    p->addPoint(QPoint(-50,50));
-//    p->addPoint(QPoint(0,50));
-//    m_pDebugBox->setData(p,m_pView,QColor(Qt::red));
+//    CAlgorithmVertexLineFilling alg;
+//    QList<QPoint> list;
+//    list << QPoint(0,0) << QPoint(20,0) << QPoint(10,10) ;//<< QPoint(20,20) << QPoint(20,0);// << QPoint(20,20) << QPoint(-15,3);
+//    alg.setPoints(list);
+//    //qDebug() << alg.getDrawPoints();
+//    StepPoints points = alg.getDrawPoints();
+//    for(int i=0; i<points.size();i++)
+//    {
+//        m_pView->setCellColor(points.at(i),m_mainColor);
+//    }
 
     m_lastZoomValue = ui->zoomSlider->value();
 }
@@ -305,7 +304,8 @@ void MainWindow::createListeners()
     m_listenersMap.insert(ui->radioBtnAlgorithmParabola, new CListenerParabola(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnBSpline, new CListenerBSpline(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnBese, new CListenerBese(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
-     m_listenersMap.insert(ui->radioBtnLineFilling, new CListenerLineFilling(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnLineFilling, new CListenerLineFilling(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+    m_listenersMap.insert(ui->radioBtnLineVertexFilling, new CListenerVertexLineFilling(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
 }
 
 
