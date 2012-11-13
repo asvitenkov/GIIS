@@ -100,7 +100,7 @@ void CListenerVertexLineFilling::reset()
 
 
     clearMainPoints();
-    if(m_mode = MODE_DEBUG)
+    if(m_mode == MODE_DEBUG)
         fixTmpObject();
     else
         clearTmpObject();
