@@ -323,3 +323,33 @@ void CCoordinateView::getBoolMatrix(bool **matrix, QColor color)
                 matrix[i][j]=false;
         }
 }
+
+
+void CCoordinateView::hideGrid(bool hide)
+{
+    if(hide)
+    {
+        for(int i=0; i<m_horLines.size(); i++)
+        {
+            m_horLines.at(i)->hide();
+        }
+
+        for(int i=0; i<m_vertLines.size(); i++)
+        {
+            m_vertLines.at(i)->hide();
+        }
+
+    }
+    else
+    {
+        for(int i=0; i<m_horLines.size(); i++)
+        {
+            m_horLines.at(i)->show();
+        }
+
+        for(int i=0; i<m_vertLines.size(); i++)
+        {
+            m_vertLines.at(i)->show();
+        }
+    }
+}

@@ -45,6 +45,8 @@ void MainWindow::_init()
 {
     m_pView = new CCoordinateView(0);
 
+    //m_pView->hideGrid(true);
+    //m_pView->hideGrid(false);
 
     ui->viewFrameGrid->addWidget(m_pView);
 

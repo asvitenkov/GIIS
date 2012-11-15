@@ -37,7 +37,11 @@ SOURCES += main.cpp\
     listenerlinefilling.cpp \
     debuganimation.cpp \
     algorithmvertexlinefilling.cpp \
-    listenervertexlinefilling.cpp
+    listenervertexlinefilling.cpp \
+    edge3d.cpp \
+    shape3d.cpp \
+    3dview.cpp \
+    3dscene.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -66,7 +70,11 @@ HEADERS  += mainwindow.h \
     listenerlinefilling.h \
     debuganimation.h \
     algorithmvertexlinefilling.h \
-    listenervertexlinefilling.h
+    listenervertexlinefilling.h \
+    edge3d.h \
+    shape3d.h \
+    3dview.h \
+    3dscene.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

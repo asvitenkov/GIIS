@@ -21,7 +21,7 @@ public:
     void setCellColor(QPoint cellPos, QColor color);
     QColor cellColor(int x, int y);
     void getBoolMatrix(bool **matrix, QColor color);
-
+    void hideGrid(bool hide);
 
 private:
     QPoint m_lastCellPos;
