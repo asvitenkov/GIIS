@@ -49,9 +49,13 @@ QList<CEdge3D> CShape3D::getTransformedEdges()
         edge = m_edgeArray.at(i);
         p1 = edge->getFirstPoint();
         p2 = edge->getSecondPoint();
+        QVector4D v1(p1.x(),p1.y(),p1.z(),p1.w());
+        QVector4D v2(p2.x(),p2.y(),p2.z(),p2.w());
+        v1 = v1 *m_transform;
+        v2 = v2 *m_transform;
+        transformedEdge.setFirstPoint( CVertex3D(v1.x(), v1.y(), v1.z(), v1.w()) );
+        transformedEdge.setSecondPoint( CVertex3D(v2.x(), v2.y(), v2.z(), v2.w()) );
 
-        transformedEdge.setFirstPoint( p1 * m_transform );
-        transformedEdge.setSecondPoint( p2 * m_transform );
 
         list.push_back(transformedEdge);
 

@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     shape3d.cpp \
     3dview.cpp \
     3dscene.cpp \
-    vertex3d.cpp
+    vertex3d.cpp \
+    transformationlistener.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -76,7 +77,8 @@ HEADERS  += mainwindow.h \
     shape3d.h \
     3dview.h \
     3dscene.h \
-    vertex3d.h
+    vertex3d.h \
+    transformationlistener.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

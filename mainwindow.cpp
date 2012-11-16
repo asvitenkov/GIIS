@@ -43,12 +43,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::_init()
 {
-    m_pView = new CCoordinateView(0);
 
+    ui->radioBtnTransformation->hide();
+
+    m_pView = new CCoordinateView(this);
+    m_pView3D = new C3DView(PROJECTION_DEFAULT,this);
+    m_pView3D->hide();
+//    m_pView->hide();
     //m_pView->hideGrid(true);
     //m_pView->hideGrid(false);
 
     ui->viewFrameGrid->addWidget(m_pView);
+    ui->viewFrameGrid->addWidget(m_pView3D);
 
     m_pDebugBox = new CDebugModeBox(this);
     ui->sidePanel->addWidget(m_pDebugBox);
@@ -112,6 +118,8 @@ void MainWindow::_init()
     connect(ui->radioBtnBese,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnLineFilling,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
     connect(ui->radioBtnLineVertexFilling,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+    connect(ui->radioBtnTransformation,SIGNAL(clicked()),this,SLOT(drawAlgorithmChanged()));
+
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
     connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
@@ -280,11 +288,12 @@ void MainWindow::drawAlgorithmChanged()
     QMap<QObject*, CAbstractListener*>::iterator it=m_listenersMap.find(objSender);
     if(it!=m_listenersMap.end())
     {
-        if( m_pCurrentListener != NULL ) m_pCurrentListener->reset();
+        if( m_pCurrentListener != NULL ){ m_pCurrentListener->reset(); m_pCurrentListener->deactivate(); }
         m_pCurrentListener = *it;
         m_pCurrentListener->setMainColor(m_mainColor);
         m_pCurrentListener->setSecondaryColor(m_secondaryColor);
         m_pCurrentListener->setMode(m_mode);
+        m_pCurrentListener->activate();
         qDebug() << "current listener is " << m_pCurrentListener->name();
     }
     else
@@ -308,6 +317,10 @@ void MainWindow::createListeners()
     m_listenersMap.insert(ui->radioBtnBese, new CListenerBese(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnLineFilling, new CListenerLineFilling(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
     m_listenersMap.insert(ui->radioBtnLineVertexFilling, new CListenerVertexLineFilling(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor));
+
+    CTransformationListener *p = new CTransformationListener(m_pView,m_pDebugBox,m_mainColor,m_secondaryColor,m_pView3D);
+    connect(ui->pushBtnLoadShape3D,SIGNAL(clicked()),p,SLOT(load3DShape()));
+    m_listenersMap.insert(ui->radioBtnTransformation, p);
 }
 
 
@@ -332,6 +345,11 @@ void MainWindow::algorithmTabIndexChanged(int index)
     else if(curTabWidget == ui->algorithmFillingArea)
     {
         ui->radioBtnLineFilling->click();
+    }
+    else if(curTabWidget == ui->transformationAlgorithm)
+    {
+        ui->radioBtnTransformation->click();
+
     }
     else{
         qCritical() << "void MainWindow::algorithmTabIndexChanged(int index) undefined tab ";

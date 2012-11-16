@@ -25,6 +25,8 @@
 #include "algorithmvertexlinefilling.h"
 #include "listenervertexlinefilling.h"
 
+#include "3dview.h"
+#include "transformationlistener.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +40,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
+
+public slots:
+
+
 private:
     void _init();
     void _setMainColor(QColor color);
@@ -61,7 +67,7 @@ private:
     QUndoStack m_pUndoStack;
     QUndoStack m_pTmpUndoStack;
     CCoordinateView *m_pView;
-
+    C3DView *m_pView3D;
 
 
     QColor m_mainColor;

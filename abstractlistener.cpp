@@ -6,8 +6,6 @@ CAbstractListener::CAbstractListener(CCoordinateView *view, CDebugModeBox *box, 
 
 }
 
-
-
 void CAbstractListener::initialize()
 {
     m_mode = MODE_NORMAL;

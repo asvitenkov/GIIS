@@ -27,6 +27,8 @@ public:
     virtual QString name();
     void setHightlightMainPoints(bool enable);
     bool hightlightMainPoints();
+    virtual void activate() { m_pCoordinateView->show();}
+    virtual void deactivate() {}
 
 protected:
     void initialize();

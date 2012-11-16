@@ -111,10 +111,6 @@ void C3DView::updateScene()
             // TODO получать координаты методом, который учитывает проекцию
             //  addLine(convert(fPoint.toPoint()), convert(sPoint.toPoint()), m_penLine);
             addLine(convertCoord(fPoint), convertCoord(sPoint), m_penLine);
-            int r=1;
-            int d1 = -3*r+1;
-            int d2 = -3*r+1;
-            //addLine(fPoint.x()/1,fPoint.y()/1,sPoint.x()*-10,sPoint.y()*-10,m_penLine);
         }
     }
 }
@@ -122,7 +118,7 @@ void C3DView::updateScene()
 
 void C3DView::addLine(QPoint p1, QPoint p2, QPen &pen)
 {
-    //qDebug() << QLine(p1,p2);
+    qDebug() << QLine(p1,p2);
     m_linesArray.push_back(m_pScene->addLine(p1.x(), p1.y(), p2.x(), p2.y(), pen ));
 }
 
