@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     edge3d.cpp \
     shape3d.cpp \
     3dview.cpp \
-    3dscene.cpp
+    3dscene.cpp \
+    vertex3d.cpp
 
 HEADERS  += mainwindow.h \
     coordinateview.h \
@@ -74,7 +75,8 @@ HEADERS  += mainwindow.h \
     edge3d.h \
     shape3d.h \
     3dview.h \
-    3dscene.h
+    3dscene.h \
+    vertex3d.h
 
 FORMS    += mainwindow.ui \
     debugmodebox.ui

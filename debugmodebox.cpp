@@ -42,10 +42,10 @@ CDebugModeBox::CDebugModeBox(QWidget *parent)
 
     connect(ui->timeSlider,SIGNAL(valueChanged(int)),this,SLOT(valueChanged(int)));
 
-    ui->btnNextStep->setShortcut(Qt::CTRL + Qt::Key_N);
-    ui->btnPreviosStep->setShortcut(Qt::CTRL + Qt::Key_P);
-    ui->btnToBegin->setShortcut(Qt::CTRL + Qt::Key_S);
-    ui->btnToEnd->setShortcut(Qt::CTRL + Qt::Key_E);
+//    ui->btnNextStep->setShortcut(Qt::CTRL + Qt::Key_N);
+//    ui->btnPreviosStep->setShortcut(Qt::CTRL + Qt::Key_P);
+//    ui->btnToBegin->setShortcut(Qt::CTRL + Qt::Key_S);
+//    ui->btnToEnd->setShortcut(Qt::CTRL + Qt::Key_E);
 
 
     m_pAnimationThread = new QThread();
