@@ -57,6 +57,7 @@ private:
 
     bool m_bDebugModeEnable;
     bool m_bHighlightInitPoints;
+    bool m_bHideFaces;
 
     MouseClickState m_btnClickState;
 
@@ -101,6 +102,7 @@ private slots:
     void algorithmTabIndexChanged(int index);
     void zoomChanged(int newValue);
     void perspectiveProjection();
+    void hideFaces();
 };
 
 #endif // MAINWINDOW_H

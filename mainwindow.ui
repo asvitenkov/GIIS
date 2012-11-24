@@ -89,7 +89,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="documentMode">
          <bool>false</bool>
@@ -385,6 +385,13 @@
                </property>
               </widget>
              </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBoxHideFaces">
+               <property name="text">
+                <string>Скрывать невидимые грани</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -672,7 +679,7 @@
      <x>0</x>
      <y>0</y>
      <width>709</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

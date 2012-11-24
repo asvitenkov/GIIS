@@ -60,14 +60,26 @@ void CTransformationListener::load3DShape()
 
     QTextStream stream(&file);
     QString line;
-    QRegExp expr("\\((\\d+),(\\d+),(\\d+)\\)->\\((\\d+),(\\d+),(\\d+)\\)");
+    QRegExp expr("\\(([-]{0,1}\\d+),([-]{0,1}\\d+),([-]{0,1}\\d+)\\)->\\(([-]{0,1}\\d+),([-]{0,1}\\d+),([-]{0,1}\\d+)\\)");
 
     bool ok;
     CShape3D *shape = new CShape3D(0);
+
+    CEdgeArray array;
+
     while(!stream.atEnd())
     {
         stream >> line;
         qDebug() << line;
+
+        if(line.indexOf("=")!=-1)
+        {
+            shape->addShapeFace(new CShapeFace(array));
+            array.clear();
+        }
+        if(line.isEmpty())
+            continue;
+
         if(expr.indexIn(line)!=-1)
         {
 
@@ -80,9 +92,11 @@ void CTransformationListener::load3DShape()
             v2.setY(expr.cap(5).toInt(&ok));
             v2.setZ(expr.cap(6).toInt(&ok));
 
-
-            shape->addEdge(new CEdge3D(v1,v2));
+            array.push_back(new CEdge3D(v1,v2));
+            //shape->addEdge(new CEdge3D(v1,v2));
         }
     }
+
+
     m_p3dView->addShape(shape);
 }

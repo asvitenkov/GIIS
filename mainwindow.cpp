@@ -45,7 +45,7 @@ void MainWindow::_init()
 {
     m_bPerspectiveProjection = false;
     ui->radioBtnTransformation->hide();
-
+    m_bHideFaces = false;
     m_pView = new CCoordinateView(this);
     m_pView3D = new C3DView(PROJECTION_DEFAULT,this);
     m_pView3D->hide();
@@ -126,7 +126,7 @@ void MainWindow::_init()
 
 
     connect(ui->checkBoxHightlight,SIGNAL(clicked()),this,SLOT(perspectiveProjection()));
-
+    connect(ui->checkBoxHideFaces,SIGNAL(clicked()),this,SLOT(hideFaces()));
 
     //connect(ui->btnRunThread, SIGNAL(clicked()),this,SLOT(runThread()));
 
@@ -403,4 +403,15 @@ void MainWindow::perspectiveProjection()
         m_pView3D->setProjection(PROJECTION_DEFAULT);
         m_bPerspectiveProjection = false;
     }
+}
+
+
+void MainWindow::hideFaces()
+{
+    m_bHideFaces = !m_bHideFaces;
+//    if(m_bHideFaces)
+//    {
+//        m_pView3D->hideFacesEnable();
+//    }
+    m_pView3D->hideFacesEnable(m_bHideFaces);
 }
