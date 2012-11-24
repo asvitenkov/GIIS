@@ -100,3 +100,11 @@ void CTransformationListener::load3DShape()
 
     m_p3dView->addShape(shape);
 }
+
+
+
+
+void CTransformationListener::setMainColor(QColor color)
+{
+    m_p3dView->setColor(color);
+}

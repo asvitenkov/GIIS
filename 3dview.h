@@ -37,6 +37,7 @@ public:
     void setDistance(int distance);
     int getDistance(){ return m_perspectiveDistance; }
     void hideFacesEnable(bool enable){ m_bShowHiddenFaces = !enable; update();}
+    void setColor(QColor color){  m_penLine.setColor(color);}
 
 private:
     bool isHideFace(CShapeFace *face, QVector3D point);

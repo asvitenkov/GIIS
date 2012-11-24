@@ -18,6 +18,7 @@ public:
     void mousePressEvent(QPoint pos);
     void activate();
     void deactivate();
+    void setMainColor(QColor color);
 
 public slots:
     void load3DShape();

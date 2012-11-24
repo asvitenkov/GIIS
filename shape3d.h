@@ -6,7 +6,7 @@
 #include <QMatrix4x4>
 #include "defines.h"
 #include "edge3d.h"
-
+#include <QPen>
 //class QMatrix4x4;
 
 typedef QList<CShapeFace*> CShapeFaceArray;
@@ -31,11 +31,13 @@ public:
     void rotateY(int angle);
     void scale(qreal sx, qreal sy, qreal sz);
     QMatrix4x4 getTransformationMatrix(){ return m_transform; }
-
+    void setPen(QPen pen){ m_pen = pen; }
+    QPen getPen(){ return m_pen; }
 private:
     CEdgeArray m_edgeArray;
     CShapeFaceArray m_faceArray;
     QMatrix4x4 m_transform;
+    QPen m_pen;
 signals:
     
 public slots:

@@ -9,7 +9,9 @@
 #include <QDebug>
 
 #include <QFile>
-
+#include <QGtkStyle>
+#include <QPlastiqueStyle>
+#include <QCleanlooksStyle>
 
 // DELETE
 #include <QMatrix4x4>
@@ -21,7 +23,8 @@ int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
-    QApplication::setStyle("Cleanlooks");
+//    QApplication::setStyle("Cleanlooks");
+    QApplication::setStyle(new QCleanlooksStyle());
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 

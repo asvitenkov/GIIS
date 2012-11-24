@@ -84,6 +84,7 @@ void C3DView::addShape(CShape3D *shape)
     if(!m_shapesArray.contains(shape))
     {
         m_shapesArray.push_back(shape);
+        shape->setPen(m_penLine);
         updateScene();
     }
     else
@@ -110,7 +111,7 @@ void C3DView::updateScene()
         shape = m_shapesArray.at(i);
         CShapeFaceArray fases = shape->getTransformedShapeFaces();
         CShapeFace *face;
-
+        QPen pen = shape->getPen();
         for(int i=0; i<fases.size(); i++)
         {
             face = fases.at(i);
@@ -127,7 +128,8 @@ void C3DView::updateScene()
                     sPoint = edge->getSecondPoint();
                     // TODO получать координаты методом, который учитывает проекцию
                     //  addLine(convert(fPoint.toPoint()), convert(sPoint.toPoint()), m_penLine);
-                    addLine(convertCoord(fPoint).toPoint(), convertCoord(sPoint).toPoint(), m_penLine);
+
+                    addLine(convertCoord(fPoint).toPoint(), convertCoord(sPoint).toPoint(), pen);
                 }
             }
         }

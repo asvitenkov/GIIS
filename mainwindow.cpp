@@ -43,6 +43,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::_init()
 {
+
+    setWindowState(Qt::WindowFullScreen);
     m_bPerspectiveProjection = false;
     ui->radioBtnTransformation->hide();
     m_bHideFaces = false;

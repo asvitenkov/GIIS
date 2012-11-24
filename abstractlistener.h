@@ -16,8 +16,8 @@ public:
     void virtual mousePressEvent(QPoint pos) = 0;
     void virtual mouseMoveEvent(QPoint pos) = 0;
     virtual void mouseReleaseEvent(QPoint pos);
-    void setMainColor(QColor color);
-    void setSecondaryColor(QColor color);
+    virtual void setMainColor(QColor color);
+    virtual void setSecondaryColor(QColor color);
     virtual QColor mainColor();
     virtual QColor secondaryColor();
     void setMode(Mode mode);
