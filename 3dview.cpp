@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QVector4D>
+#include <QLineF>
 
 
 C3DView::C3DView(Projection projection, QWidget *parent):
@@ -13,13 +14,17 @@ C3DView::C3DView(Projection projection, QWidget *parent):
 
 void C3DView::init()
 {
+
+    m_viewPoint = QVector3D(0,0,-1000);
     m_move = 5;
     m_rotate = 5;
     m_scale = 0.2;
     m_perspectiveDistance = 200;
     m_pDistance = 10;
     setShortcutEnabled(true);
-    m_shapesProjection = PROJECTION_PERSPECTIVE;
+
+    m_bShowHiddenFaces = false;
+    //m_shapesProjection = PROJECTION_PERSPECTIVE;
     m_moveXUp = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z),this);
     m_moveXDown = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X),this);
     m_moveYUp = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A),this);
@@ -90,35 +95,80 @@ void C3DView::addShape(CShape3D *shape)
 
 void C3DView::updateScene()
 {
+
     clearView();
     CShape3D *shape;
-    QList<CEdge3D> edges;
-    CEdge3D edge;
     CVertex3D fPoint, sPoint;
 
     for(int i=0; i<m_shapesArray.size(); i++)
     {
-        if( !(shape = m_shapesArray.at(i)) )
-                continue;
+        shape = m_shapesArray.at(i);
+        CShapeFaceArray fases = shape->getTransformedShapeFaces();
+        CShapeFace *face;
 
-        edges = shape->getTransformedEdges();
-
-        for(int i=0; i<edges.size(); i++)
+        for(int i=0; i<fases.size(); i++)
         {
-            edge = edges.at(i);
-            fPoint = edge.getFirstPoint();
-            sPoint = edge.getSecondPoint();
-            // TODO получать координаты методом, который учитывает проекцию
-            //  addLine(convert(fPoint.toPoint()), convert(sPoint.toPoint()), m_penLine);
-            addLine(convertCoord(fPoint), convertCoord(sPoint), m_penLine);
+            face = fases.at(i);
+
+            if(!isHideFace(face,m_viewPoint))
+            {
+                CEdgeArray edges = face->getEdges();
+                CEdge3D *edge;
+
+                for(int i=0; i<edges.size(); i++)
+                {
+                    edge = edges.at(i);
+                    fPoint = edge->getFirstPoint();
+                    sPoint = edge->getSecondPoint();
+                    // TODO получать координаты методом, который учитывает проекцию
+                    //  addLine(convert(fPoint.toPoint()), convert(sPoint.toPoint()), m_penLine);
+                    addLine(convertCoord(fPoint), convertCoord(sPoint), m_penLine);
+                }
+            }
         }
+
     }
+
+//    clearView();
+//    CShape3D *shape;
+//    QList<CEdge3D> edges;
+//    CEdge3D edge;
+//    CVertex3D fPoint, sPoint;
+
+//    for(int i=0; i<m_shapesArray.size(); i++)
+//    {
+//        if( !(shape = m_shapesArray.at(i)) )
+//                continue;
+
+//        edges = shape->getTransformedEdges();
+
+//        for(int i=0; i<edges.size(); i++)
+//        {
+//            edge = edges.at(i);
+//            fPoint = edge.getFirstPoint();
+//            sPoint = edge.getSecondPoint();
+//            // TODO получать координаты методом, который учитывает проекцию
+//            //  addLine(convert(fPoint.toPoint()), convert(sPoint.toPoint()), m_penLine);
+//            addLine(convertCoord(fPoint), convertCoord(sPoint), m_penLine);
+//        }
+//    }
 }
 
 
 void C3DView::addLine(QPoint p1, QPoint p2, QPen &pen)
 {
-    qDebug() << QLine(p1,p2);
+    //qDebug() << QLine(p1,p2);
+
+
+    LineArray::iterator it;
+
+    QLineF line;
+//    for(it = m_linesArray.begin(); it!=m_linesArray.end(); it++)
+//    {
+//        line = (*it)->line();
+//        if(line.x1() == p1.x() && line.x2() == p2.x() && line.y1() == p1.y() && line.y2() == p2.y())
+//            return;
+//    }
     m_linesArray.push_back(m_pScene->addLine(p1.x(), p1.y(), p2.x(), p2.y(), pen ));
 }
 
@@ -131,72 +181,84 @@ void C3DView::addLine(qreal x1, qreal y1, qreal x2, qreal y2, QPen &pen)
 
 void C3DView::moveXUp()
 {
-    m_shapesArray.at(0)->move(m_move,0,0);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->move(m_move,0,0);
     update();
 }
 
 void C3DView::moveXDown()
 {
-    m_shapesArray.at(0)->move(-m_move,0,0);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->move(-m_move,0,0);
     update();
 }
 
 void C3DView::moveYUp()
 {
-    m_shapesArray.at(0)->move(0,m_move,0);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->move(0,m_move,0);
     update();
 }
 
 void C3DView::moveYDown()
 {
-    m_shapesArray.at(0)->move(0,-m_move,0);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->move(0,-m_move,0);
     update();
 }
 
 void C3DView::moveZUp()
 {
-    m_shapesArray.at(0)->move(0,0,m_move);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->move(0,0,m_move);
     update();
 }
 
 void C3DView::moveZDown()
 {
-    m_shapesArray.at(0)->move(0,0,-m_move);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->move(0,0,-m_move);
     update();
 }
 
 void C3DView::rotateXUp()
 {
-    m_shapesArray.at(0)->rotateX(m_rotate);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->rotateX(m_rotate);
     update();
 }
 
 void C3DView::rotateXDown()
 {
-    m_shapesArray.at(0)->rotateX(-m_rotate);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->rotateX(-m_rotate);
     update();
 }
 
 void C3DView::rotateYUp()
 {
-    m_shapesArray.at(0)->rotateY(m_rotate);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->rotateY(m_rotate);
     update();
 }
 
 void C3DView::rotateYDown()
 {
-    m_shapesArray.at(0)->rotateY(-m_rotate);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->rotateY(-m_rotate);
     update();
 }
 void C3DView::rotateZUp()
 {
-    m_shapesArray.at(0)->rotateZ(m_rotate);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->rotateZ(m_rotate);
     update();
 }
 
 void C3DView::rotateZDown()
 {
-    m_shapesArray.at(0)->rotateZ(-m_rotate);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->rotateZ(-m_rotate);
     update();
 }
 
@@ -204,45 +266,68 @@ void C3DView::rotateZDown()
 
 void C3DView::scaleXUp()
 {
-    m_shapesArray.at(0)->scale(1+m_scale,1,1);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->scale(1+m_scale,1,1);
     update();
 }
 
 void C3DView::scaleXDown()
 {
-    m_shapesArray.at(0)->scale(1-m_scale,1,1);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->scale(1-m_scale,1,1);
     update();
 }
 
 
 void C3DView::scaleYUp()
 {
-    m_shapesArray.at(0)->scale(1,1+m_scale,1);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->scale(1,1+m_scale,1);
     update();
 }
 
 void C3DView::scaleYDown()
 {
-    m_shapesArray.at(0)->scale(1,1-m_scale,1);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->scale(1,1-m_scale,1);
     update();
 }
 
 void C3DView::scaleZUp()
 {
-    m_shapesArray.at(0)->scale(1,1,1+m_scale);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->scale(1,1,1+m_scale);
     update();
 }
 
 void C3DView::scaleZDown()
 {
-    m_shapesArray.at(0)->scale(1,1,1-m_scale);
+    if(m_shapesArray.isEmpty()) return;
+   m_shapesArray.last()->scale(1,1,1-m_scale);
     update();
 }
 
 
 QPoint C3DView::convertCoord(CVertex3D vertex)
 {
+
     QPoint point = vertex.toPoint();
+
+//    if(vertex.z()>m_perspectiveDistance)
+//        //vertex.setZ(m_perspectiveDistance);
+//        return point;
+
+//    if(vertex.z()<0 && -vertex.z() > m_perspectiveDistance )
+//        return point;
+
+
+    int k = m_perspectiveDistance;
+
+//    if(vertex.z()>m_perspectiveDistance || -vertex.z() >m_perspectiveDistance)
+//    {
+//        qDebug() << "work";
+//        k*=-1;
+//    }
 
     switch (m_shapesProjection)
     {
@@ -255,6 +340,12 @@ QPoint C3DView::convertCoord(CVertex3D vertex)
         coord = coord * pos;
         CVertex3D v3d(coord.x(),coord.y(),coord.z(),coord.w());
         point = v3d.toPoint();
+
+//        if(vertex.z()>m_perspectiveDistance || -vertex.z() >m_perspectiveDistance)
+//        {
+//            qDebug() << "work";
+//            point.setX(-point.x());
+//        }
     }
 
 
@@ -293,4 +384,35 @@ void C3DView::setDistance(int distance)
 
     qDebug() << m_perspectiveDistance;
     updateScene();
+}
+
+
+bool C3DView::isHideFace(CShapeFace *face, QVector3D P)
+{
+
+    CEdgeArray edges = face->getEdges();
+    if(edges.size()<3)
+        return true;
+    CVertex3D p1 = edges.at(0)->getFirstPoint();
+    CVertex3D p2 = edges.at(1)->getFirstPoint();
+    CVertex3D p3 = edges.at(2)->getFirstPoint();
+
+
+
+    QVector3D vector1(p1.x()-p2.x(),p1.y()-p2.y(), p1.z()-p2.z() );
+    QVector3D vector2(p3.x()-p2.x(),p3.y()-p2.y(), p3.z()-p2.z() );
+
+    qreal a,b,c,d;
+    a = vector1.y() * vector2.z() - vector2.y() * vector1.z();
+    b = vector1.z() * vector2.x() - vector2.z() * vector1.x();
+    c = vector1.x() * vector2.y() - vector2.x() * vector1.y();
+    d = -1 * ( a * vector1.x() + b * vector1.y() + c * vector1.z() );
+
+    int val = (a * P.x() + b * P.y() + c*P.z() + d);
+    if( (val) > 0 ){
+        return true;
+    } else {
+        return false;
+    }
+
 }

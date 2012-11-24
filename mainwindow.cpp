@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::_init()
 {
-
+    m_bPerspectiveProjection = false;
     ui->radioBtnTransformation->hide();
 
     m_pView = new CCoordinateView(this);
@@ -123,6 +123,9 @@ void MainWindow::_init()
 
     connect(ui->tabAlgorithms,SIGNAL(currentChanged(int)),this,SLOT(algorithmTabIndexChanged(int)));
     connect(ui->zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(zoomChanged(int)));
+
+
+    connect(ui->checkBoxHightlight,SIGNAL(clicked()),this,SLOT(perspectiveProjection()));
 
 
     //connect(ui->btnRunThread, SIGNAL(clicked()),this,SLOT(runThread()));
@@ -254,6 +257,7 @@ void MainWindow::clearView()
     if(m_pCurrentListener != NULL)
         m_pCurrentListener->reset();
      m_pView->clear();
+     m_pView3D->clearView();
      setCursor(QCursor(Qt::ArrowCursor));
 }
 
@@ -261,11 +265,13 @@ void MainWindow::clearView()
 void MainWindow::zoomIn()
 {
     m_pView->zoomIn();
+    m_pView3D->scale(1.05,1.05);
 }
 
 void MainWindow::zoomOut()
 {
     m_pView->zoomOut();
+    m_pView3D->scale(0.95,0.95);
 }
 
 
@@ -383,3 +389,18 @@ void MainWindow::mouseReleaseOnCell(int x, int y)
     m_pCurrentListener->mouseReleaseEvent(QPoint(x,y));
 }
 
+
+
+void MainWindow::perspectiveProjection()
+{
+    if(!m_bPerspectiveProjection)
+    {
+        m_pView3D->setProjection(PROJECTION_PERSPECTIVE);
+        m_bPerspectiveProjection = true;
+    }
+    else
+    {
+        m_pView3D->setProjection(PROJECTION_DEFAULT);
+        m_bPerspectiveProjection = false;
+    }
+}

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>687</width>
-    <height>477</height>
+    <width>709</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>3</number>
         </property>
         <property name="documentMode">
          <bool>false</bool>
@@ -337,14 +337,14 @@
              <item row="0" column="0">
               <widget class="QRadioButton" name="radioBtnLineFilling">
                <property name="text">
-                <string>Метод построчного сканирования</string>
+                <string>Затравочный алгоритм</string>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
               <widget class="QRadioButton" name="radioBtnLineVertexFilling">
                <property name="text">
-                <string>Построчный</string>
+                <string>Построчный алгоритм</string>
                </property>
               </widget>
              </item>
@@ -361,11 +361,11 @@
           <item row="0" column="0">
            <widget class="QGroupBox" name="tab_2">
             <property name="title">
-             <string>GroupBox</string>
+             <string/>
             </property>
             <layout class="QGridLayout" name="gridLayout_17">
              <item row="2" column="0">
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="checkBoxHightlight">
                <property name="text">
                 <string>Перспективная проекция</string>
                </property>
@@ -671,8 +671,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>687</width>
-     <height>21</height>
+     <width>709</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

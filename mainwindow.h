@@ -69,6 +69,7 @@ private:
     CCoordinateView *m_pView;
     C3DView *m_pView3D;
 
+    bool m_bPerspectiveProjection;
 
     QColor m_mainColor;
     QColor m_secondaryColor;
@@ -99,6 +100,7 @@ private slots:
     void drawAlgorithmChanged();
     void algorithmTabIndexChanged(int index);
     void zoomChanged(int newValue);
+    void perspectiveProjection();
 };
 
 #endif // MAINWINDOW_H

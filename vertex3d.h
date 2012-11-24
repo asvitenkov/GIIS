@@ -14,6 +14,13 @@ public:
     qreal y() const { /*qDebug() << "y =" << m_y/m_w;*/ return m_y/m_w; }
     qreal z() const { /*qDebug() << "z =" << m_z/m_w;*/ return m_z/m_w; }
     qreal w() const { return m_w; }
+
+    qreal xx() const { /*qDebug() << "x =" << m_x/m_w;*/ return m_x; }
+    qreal yy() const { /*qDebug() << "y =" << m_y/m_w;*/ return m_y; }
+    qreal zz() const { /*qDebug() << "z =" << m_z/m_w;*/ return m_z; }
+    qreal ww() const { return m_w; }
+
+
     QPoint toPoint() { /*qDebug() << m_w;*/  return QPoint(x(),y()); }
     void setX(qreal x) { m_x = x; }
     void setY(qreal y) { m_y = y; }

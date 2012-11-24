@@ -1,7 +1,11 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+#include "edge3d.h"
+#include "shapeface.h"
 
+typedef QList<CEdge3D*> CEdgeArray;
+//typedef QList<CShapeFace> CShapeFaceArray;
 
 enum MouseClickState{
     MCS_UNDEFINED,

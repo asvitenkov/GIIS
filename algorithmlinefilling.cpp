@@ -23,6 +23,30 @@ StepPoints CAlgorithmLineFilling::getDrawPoints()
 
     //reset();
 
+//    StepPoints poitns;
+//    m_stack.push_back(m_startPoint);
+//    QPoint curPoint;
+//    QPoint left, right;
+//    int anchor;
+//    while(!m_stack.isEmpty())
+//    {
+//        curPoint = m_stack.at(0);
+//        m_stack.pop_front();
+//        fillLine(curPoint,left, right, poitns);
+//        int leftX,rightX;
+//        leftX = left.x();
+//        rightX = right.x();
+//        checkLine(leftX, rightX, curPoint.y()-1, anchor);
+//        leftX = left.x();
+//        rightX = right.x();
+//        checkLine(leftX, rightX, curPoint.y()+1, anchor);
+
+//    }
+
+//    return poitns;
+
+
+
     StepPoints poitns;
     m_stack.push_back(m_startPoint);
     QPoint curPoint;
@@ -31,25 +55,21 @@ StepPoints CAlgorithmLineFilling::getDrawPoints()
     while(!m_stack.isEmpty())
     {
         curPoint = m_stack.at(0);
+
         m_stack.pop_front();
-        fillLine(curPoint,left, right, poitns);
-        int leftX,rightX;
-        leftX = left.x();
-        rightX = right.x();
-        checkLine(leftX, rightX, curPoint.y()-1, anchor);
-//        {
-//            m_stack.push_back(QPoint(anchor, curPoint.y()-1));
-//        }
-        leftX = left.x();
-        rightX = right.x();
-        checkLine(leftX, rightX, curPoint.y()+1, anchor);
-//        {
-//            m_stack.push_back(QPoint(anchor, curPoint.y()+1));
-//        }
+        poitns.push_back(curPoint-QPoint(130,130));
+        int x = curPoint.x();
+        int y = curPoint.y();
+        m_pMatrix[x][y] = true;
+        if(!m_pMatrix[x-1][y] && !m_stack.contains(QPoint(x-1,y))) m_stack.push_back(QPoint(x-1,y));
+        if(!m_pMatrix[x+1][y] && !m_stack.contains(QPoint(x+1,y))) m_stack.push_back(QPoint(x+1,y));
+        if(!m_pMatrix[x][y-1] && !m_stack.contains(QPoint(x,y-1))) m_stack.push_back(QPoint(x,y-1));
+        if(!m_pMatrix[x][y+1] && !m_stack.contains(QPoint(x,y+1))) m_stack.push_back(QPoint(x,y+1));
 
     }
 
     return poitns;
+
 }
 
 bool CAlgorithmLineFilling::nextStep()

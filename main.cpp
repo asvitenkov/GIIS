@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     MainWindow w;
-    w.setWindowTitle("ГИИС. ЛАБОРАТОРНАЯ 1. ГЕНЕРАЦИЯ ОТРЕЗКОВ");
+    w.setWindowTitle("ГИИС");
     w.show();
 
 
@@ -70,9 +70,55 @@ int main(int argc, char *argv[])
 //    shape.addEdge( &e11 );
 //    shape.addEdge( &e12 );
 
+//    CEdgeArray array;
+//    array.push_back(&e1);
+//    array.push_back(&e2);
+//    array.push_back(&e3);
+//    array.push_back(&e4);
+//    //CShapeFace f1(array,0);
+//    shape.addShapeFace(new CShapeFace(array));
+//    array.clear();
+
+//    array.push_back(new CEdge3D(v8,v7));
+//    array.push_back(new CEdge3D(v7,v6));
+//    array.push_back(new CEdge3D(v6,v5));
+//    array.push_back(new CEdge3D(v5,v8));
+//    shape.addShapeFace(new CShapeFace(array));
+//    array.clear();
+
+//    array.push_back(new CEdge3D(v6,v7));
+//    array.push_back(new CEdge3D(v7,v3));
+//    array.push_back(new CEdge3D(v3,v2));
+//    array.push_back(new CEdge3D(v2,v6));
+//    shape.addShapeFace(new CShapeFace(array));
+//    array.clear();
+
+//    array.push_back(new CEdge3D(v5,v1));
+//    array.push_back(new CEdge3D(v1,v4));
+//    array.push_back(new CEdge3D(v4,v8));
+//    array.push_back(new CEdge3D(v8,v5));
+//    shape.addShapeFace(new CShapeFace(array));
+//    array.clear();
+
+//    array.push_back(new CEdge3D(v1,v5));
+//    array.push_back(new CEdge3D(v5,v6));
+//    array.push_back(new CEdge3D(v6,v2));
+//    array.push_back(new CEdge3D(v2,v1));
+//    shape.addShapeFace(new CShapeFace(array));
+//    array.clear();
+
+
+//    array.push_back(new CEdge3D(v4,v3));
+//    array.push_back(new CEdge3D(v3,v7));
+//    array.push_back(new CEdge3D(v7,v8));
+//    array.push_back(new CEdge3D(v8,v4));
+//    shape.addShapeFace(new CShapeFace(array));
+//    array.clear();
+
 //    view.addShape(&shape);
 
 //    shape.scale(100,100,100);
+//    shape.rotateX(15);
 //    view.update();
 
     return a.exec();

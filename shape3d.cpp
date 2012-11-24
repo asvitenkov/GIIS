@@ -35,6 +35,44 @@ CEdgeArray CShape3D::getEdges()
 }
 
 
+CShapeFaceArray CShape3D::getTransformedShapeFaces()
+{
+    CShapeFaceArray array;
+    CShapeFace *face;
+    CEdgeArray edges;
+    CEdge3D *edge;
+    CEdge3D *transformedEdge;
+    CEdgeArray transformedEdges;
+    CVertex3D p1,p2;
+
+
+    for(int i=0; i<m_faceArray.size(); i++)
+    {
+        face = m_faceArray.at(i);
+        edges = face->getEdges();
+
+        transformedEdges.clear();
+        for(int i=0; i<edges.size(); i++)
+        {
+            edge = edges.at(i);
+            p1 = edge->getFirstPoint();
+            p2 = edge->getSecondPoint();
+            QVector4D v1(p1.x(),p1.y(),p1.z(),p1.w());
+            QVector4D v2(p2.x(),p2.y(),p2.z(),p2.w());
+            v1 = v1 *m_transform;
+            v2 = v2 *m_transform;
+            transformedEdge = new CEdge3D(CVertex3D(v1.x(), v1.y(), v1.z(), v1.w()), CVertex3D(v2.x(), v2.y(), v2.z(), v2.w()));
+//            transformedEdge.setFirstPoint( CVertex3D(v1.x(), v1.y(), v1.z(), v1.w()) );
+//            transformedEdge.setSecondPoint( CVertex3D(v2.x(), v2.y(), v2.z(), v2.w()) );
+
+
+            transformedEdges.push_back(transformedEdge);
+        }
+
+        array.push_back(new CShapeFace(transformedEdges));
+    }
+    return array;
+}
 
 QList<CEdge3D> CShape3D::getTransformedEdges()
 {
@@ -127,4 +165,10 @@ void CShape3D::scale(qreal sx, qreal sy, qreal sz)
 
     m_transform*=scale;
     //qDebug() << m_transform;
+}
+
+
+void CShape3D::addShapeFace(CShapeFace *face)
+{
+    m_faceArray.push_back(face);
 }

@@ -31,13 +31,14 @@ public:
     C3DView(Projection projection = PROJECTION_DEFAULT, QWidget * parent = 0);
     void addShape(CShape3D *shape);
     //void setProjection(Projection projection){ m_shapesProjection = projection; }
-    void clearView(){ m_pScene->clear(); }
+    void clearView(){ m_pScene->clear(); /*m_shapesArray.clear();*/ }
     void update(){ updateScene(); }
     void setProjection(Projection projection);
     void setDistance(int distance);
     int getDistance(){ return m_perspectiveDistance; }
 
 private:
+    bool isHideFace(CShapeFace *face, QVector3D point);
     QPoint convertCoord(CVertex3D vertex);
     void init();
     void updateScene();
@@ -62,6 +63,8 @@ private:
 
     QShortcut *m_distanceUp, *m_distanceDown;
 
+    QVector3D m_viewPoint;
+    bool m_bShowHiddenFaces;
     int m_move;
     int m_rotate;
     qreal m_scale;
